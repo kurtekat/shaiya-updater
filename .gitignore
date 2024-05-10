@@ -1,0 +1,10 @@
+*.vs
+*.vscode
+*Debug
+*Release
+*x64
+*packages
+*bin
+*obj
+*.ini
+*.txt
