@@ -1,4 +1,5 @@
 ﻿#pragma warning disable 8602, 8603, 8618
+using System.IO;
 using System.Runtime.Serialization;
 using Parsec.Serialization;
 using Parsec.Shaiya.Core;
@@ -115,7 +116,7 @@ public sealed class Sah : FileBase
         if (DirectoryIndex.TryGetValue(path, out var matchingFolder))
             return matchingFolder;
 
-        var pathFolders = path.Split('/').ToList();
+        var pathFolders = path.Split(System.IO.Path.DirectorySeparatorChar).ToList();
         var currentFolder = RootDirectory;
 
         foreach (var folderName in pathFolders)
