@@ -21,6 +21,12 @@ namespace Updater.Tests.Core
         }
 
         [Test]
+        public void FileName_IsNotEmpty()
+        {
+            Assert.That(ServerConfiguration.FileName, Is.Not.Empty);
+        }
+
+        [Test]
         public void PatchFileVersion_IsNotZero()
         {
             Assert.That(_serverCfg.PatchFileVersion, Is.Not.Zero);
