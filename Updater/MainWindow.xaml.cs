@@ -40,7 +40,7 @@ namespace Updater
                     return;
             }
 
-            _backgroundWorker1.ReportProgress(e.ProgressPercentage, 1);
+            _backgroundWorker1.ReportProgress(e.ProgressPercentage, new ProgressReport("", 1));
         }
 
         private void BackgroundWorker1_DoWork(object? sender, DoWorkEventArgs e)
@@ -56,16 +56,14 @@ namespace Updater
             if (e.UserState is null)
                 return;
 
-            if (e.UserState is string progressMessage)
+            if (e.UserState is ProgressReport progressReport)
             {
-                if (!string.IsNullOrEmpty(progressMessage))
-                    _textBox1.Text = progressMessage;
-            }
-            else if (e.UserState is int progressBarNumber)
-            {
-                if (progressBarNumber == 1)
-                    _progressBar1.Value = e.ProgressPercentage;
-                else if (progressBarNumber == 2)
+                if (!string.IsNullOrEmpty(progressReport.Message))
+                    _textBox1.Text = progressReport.Message;
+
+                if (progressReport.ByProgressBar == 1)
+                    _progressBar1.Value = e.ProgressPercentage;       
+                else if (progressReport.ByProgressBar == 2)
                     _progressBar2.Value = e.ProgressPercentage;
             }
         }
@@ -83,7 +81,10 @@ namespace Updater
                 MessageBox.Show(Constants.Message2, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown(0);
             }
+        }
 
+        private void Window1_Loaded(object sender, RoutedEventArgs e)
+        {
             _webBrowser1.Source = new Uri(Constants.WebBrowserSource);
             _backgroundWorker1.RunWorkerAsync();
         }
