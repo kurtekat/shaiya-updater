@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Updater"
         mc:Ignorable="d"
-        Title="Shaiya Updater" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None" MouseLeftButtonDown="Window1_MouseLeftButtonDown" WindowStartupLocation="CenterScreen" Initialized="Window1_Initialized">
+        Title="Shaiya Updater" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None" MouseLeftButtonDown="Window1_MouseLeftButtonDown" WindowStartupLocation="CenterScreen" Initialized="Window1_Initialized" Loaded="Window1_Loaded">
     <Grid x:Name="_grid1">
         <WebBrowser x:Name="_webBrowser1" Margin="10,35,10,0" Height="346" Width="780" Focusable="False" VerticalAlignment="Top"/>
         <Button x:Name="_button2" Content="" Margin="0,0,10,10" Background="{x:Null}" RenderTransformOrigin="0.506,1.074" Height="54" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="158" Click="Button2_Click"/>
