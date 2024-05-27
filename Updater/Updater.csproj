@@ -15,7 +15,35 @@
     <Authors>$(AssemblyName)</Authors>
     <Description></Description>
     <RepositoryType>git</RepositoryType>
+    <ApplicationIcon>Resources\Icon\Icon3.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Bitmap\Bitmap167.bmp" />
+    <None Remove="Resources\Bitmap\Bitmap168.bmp" />
+    <None Remove="Resources\Bitmap\Bitmap169.bmp" />
+    <None Remove="Resources\Bitmap\Bitmap170.bmp" />
+    <None Remove="Resources\Bitmap\Bitmap185.bmp" />
+    <None Remove="Resources\Bitmap\Bitmap187.bmp" />
+    <None Remove="Resources\Bitmap\Bitmap188.bmp" />
+    <None Remove="Resources\Icon\Icon3.ico" />
+    <None Remove="Resources\Icon\Icon9.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Icon\Icon3.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Bitmap\Bitmap167.bmp" />
+    <EmbeddedResource Include="Resources\Bitmap\Bitmap168.bmp" />
+    <EmbeddedResource Include="Resources\Bitmap\Bitmap169.bmp" />
+    <EmbeddedResource Include="Resources\Bitmap\Bitmap170.bmp" />
+    <EmbeddedResource Include="Resources\Bitmap\Bitmap185.bmp" />
+    <EmbeddedResource Include="Resources\Bitmap\Bitmap187.bmp" />
+    <EmbeddedResource Include="Resources\Bitmap\Bitmap188.bmp" />
+    <EmbeddedResource Include="Resources\Icon\Icon3.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Parsec\" />

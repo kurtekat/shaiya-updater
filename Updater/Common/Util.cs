@@ -1,6 +1,9 @@
 ﻿using System.IO;
 using System.Net.Http;
 using System.IO.Compression;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows;
 
 namespace Updater.Common
 {
@@ -55,6 +58,37 @@ namespace Updater.Common
                 var log = new Log();
                 log.Write(ex.ToString());
                 return -1;
+            }
+        }
+
+        public static Image? GetImageFromResource(string name, int width, int height)
+        {
+            try
+            {
+                using var stream = Application.ResourceAssembly.GetManifestResourceStream(name);
+                if (stream is null)
+                    return null;
+
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                stream.Seek(0, SeekOrigin.Begin);
+                bitmapImage.StreamSource = stream;
+                bitmapImage.EndInit();
+
+                var image = new Image
+                {
+                    Height = height,
+                    Width = width,
+                    Source = bitmapImage
+                };
+
+                return image;
+            }
+            catch (Exception ex)
+            {
+                var log = new Log();
+                log.Write(ex.ToString());
+                return null;
             }
         }
 
