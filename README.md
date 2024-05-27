@@ -35,6 +35,10 @@ Windows 11    | Version 22000+    |
 
 *\** Windows 7 SP1 is supported with Extended Security Updates installed.
 
+## Screenshots
+
+![Capture](https://github.com/kurtekat/shaiya-updater/assets/142125482/ee526f55-5a0f-45fa-a6ed-d231434b21f1)
+
 # Documentation
 
 This project is designed to be like the original application. Users are expected to design the interface and develop the project to suit their needs. The `CheckVersion` logic is not implemented.
