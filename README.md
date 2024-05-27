@@ -56,6 +56,14 @@ StartUpdate=UPDATE_END
 
 https://github.com/kurtekat/kurtekat.github.io
 
+### Web
+
+```csharp
+// Updater/Core/Constants.cs
+public const string Source = "https://kurtekat.github.io";
+public const string WebBrowserSource = "https://google.com";
+```
+
 ## Patching
 
 ### Data
