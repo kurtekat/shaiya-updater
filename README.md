@@ -41,7 +41,7 @@ Windows 11    | Version 22000+    |
 
 # Documentation
 
-This project is designed to be like the original application. Users are expected to design the interface and develop the project to suit their needs. The `CheckVersion` logic is not implemented.
+This project is designed to be like the original application. Users are expected to design the interface and develop the code to suit their needs. The source code is shared as-is, with little or no support from the author(s).
 
 ## Client Configuration
 
