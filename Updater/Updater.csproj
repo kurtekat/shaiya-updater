@@ -16,6 +16,7 @@
     <Description></Description>
     <RepositoryType>git</RepositoryType>
     <ApplicationIcon>Resources\Icon\Icon3.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
