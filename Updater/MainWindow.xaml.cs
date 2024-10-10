@@ -18,14 +18,14 @@ namespace Updater
     {
         private static readonly BackgroundWorker _backgroundWorker1 = new();
         private static HttpClient _httpClient = new();
-        private static Image? _icon3 = new();
-        private static Image? _image167 = new();
-        private static Image? _image168 = new();
-        private static Image? _image169 = new();
-        private static Image? _image170 = new();
-        private static Image? _image185 = new();
-        private static Image? _image187 = new();
-        private static Image? _image188 = new();
+        private static readonly Image _icon3 = new();
+        private static readonly Image _image167 = new();
+        private static readonly Image _image168 = new();
+        private static readonly Image _image169 = new();
+        private static readonly Image _image170 = new();
+        private static readonly Image _image185 = new();
+        private static readonly Image _image187 = new();
+        private static readonly Image _image188 = new();
 
         public MainWindow()
         {
@@ -56,9 +56,6 @@ namespace Updater
         private void BackgroundWorker1_DoWork(object? sender, DoWorkEventArgs e)
         {
             Program.DoWork(_httpClient, _backgroundWorker1);
-
-            if (_backgroundWorker1.CancellationPending)
-                e.Cancel = true;
         }
 
         private void BackgroundWorker1_ProgressChanged(object? sender, ProgressChangedEventArgs e)
@@ -92,31 +89,77 @@ namespace Updater
                 Application.Current.Shutdown(0);
             }
 
-            _icon3 = Util.GetImageFromResource("Updater.Resources.Icon.Icon3.ico", 48, 48);
-            _image167 = Util.GetImageFromResource("Updater.Resources.Bitmap.Bitmap167.bmp", 750, 550);
-            _image168 = Util.GetImageFromResource("Updater.Resources.Bitmap.Bitmap168.bmp", 148, 38);
-            _image169 = Util.GetImageFromResource("Updater.Resources.Bitmap.Bitmap169.bmp", 148, 38);
-            _image170 = Util.GetImageFromResource("Updater.Resources.Bitmap.Bitmap170.bmp", 148, 38);
-            _image185 = Util.GetImageFromResource("Updater.Resources.Bitmap.Bitmap185.bmp", 26, 24);
-            _image187 = Util.GetImageFromResource("Updater.Resources.Bitmap.Bitmap187.bmp", 26, 24);
-            _image188 = Util.GetImageFromResource("Updater.Resources.Bitmap.Bitmap188.bmp", 26, 24);
+            var icon3 = Util.BitmapImageFromManifestResource("Updater.Resources.Icon.Icon3.ico");
+            if (icon3.StreamSource is not null)
+            {
+                _icon3.Width = 48;
+                _icon3.Height = 48;
+                _icon3.Source = icon3;
+            }
+
+            var image167 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap167.bmp");
+            if (image167.StreamSource is not null)
+            {
+                _image167.Width = 750;
+                _image167.Height = 550;
+                _image167.Source = image167;
+            }
+
+            var image168 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap168.bmp");
+            if (image168.StreamSource is not null)
+            {
+                _image168.Width = 148;
+                _image168.Height = 38;
+                _image168.Source = image168;
+            }
+
+            var image169 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap169.bmp");
+            if (image169.StreamSource is not null)
+            {
+                _image169.Width = 148;
+                _image169.Height = 38;
+                _image169.Source = image169;
+            }
+
+            var image170 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap170.bmp");
+            if (image170.StreamSource is not null)
+            {
+                _image170.Width = 148;
+                _image170.Height = 38;
+                _image170.Source = image170;
+            }
+
+            var image185 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap185.bmp");
+            if (image185.StreamSource is not null)
+            {
+                _image185.Width = 26;
+                _image185.Height = 24;
+                _image185.Source = image185;
+            }
+
+            var image187 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap187.bmp");
+            if (image187.StreamSource is not null)
+            {
+                _image187.Width = 26;
+                _image187.Height = 24;
+                _image187.Source = image187;
+            }
+
+            var image188 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap188.bmp");
+            if (image188.StreamSource is not null)
+            {
+                _image188.Width = 26;
+                _image188.Height = 24;
+                _image188.Source = image188;
+            }
         }
 
         private void Window1_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_image167 is not null)
-            {
-                var imageBrush = new ImageBrush();
-                imageBrush.ImageSource = _image167.Source;
-                _window1.Background = imageBrush;
-            }
-
-            if (_icon3 is not null)
-                _window1.Icon = _icon3.Source;
-
+            _window1.Background = new ImageBrush(_image167.Source);
+            _window1.Icon = _icon3.Source;
             _button1.Content = _image185;
             _button2.Content = _image168;
-
             _webBrowser1.Source = new Uri(Constants.WebBrowserSource);
             _backgroundWorker1.RunWorkerAsync();
         }
