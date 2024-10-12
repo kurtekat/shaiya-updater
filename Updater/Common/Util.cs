@@ -1,8 +1,8 @@
 ﻿using System.IO;
 using System.Net.Http;
-using System.IO.Compression;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using System.IO.Compression;
 
 namespace Updater.Common
 {
@@ -12,8 +12,9 @@ namespace Updater.Common
         {
             try
             {
-                using var response = httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).Result;
-                response.EnsureSuccessStatusCode();
+                using (var response = httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).Result)
+                    response.EnsureSuccessStatusCode();
+
                 return httpClient.GetStringAsync(requestUri).Result;
             }
             catch (Exception ex)
@@ -28,8 +29,8 @@ namespace Updater.Common
         {
             try
             {
-                using var response = httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).Result;
-                response.EnsureSuccessStatusCode();
+                using (var response = httpClient.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead).Result)
+                    response.EnsureSuccessStatusCode();
 
                 using var stream = httpClient.GetStreamAsync(requestUri).Result;
                 using var output = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
@@ -39,24 +40,6 @@ namespace Updater.Common
             {
                 var log = new Log();
                 log.Write(ex.ToString());
-            }
-        }
-
-        public static int ExtractZipFile(string fileName)
-        {
-            try
-            {
-                using var archive = ZipFile.OpenRead(fileName);
-                foreach (var entry in archive.Entries)
-                    ZipFileExtensions.ExtractToFile(entry, entry.FullName, true);
-
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                var log = new Log();
-                log.Write(ex.ToString());
-                return -1;
             }
         }
 
@@ -80,16 +63,32 @@ namespace Updater.Common
             return bitmapImage;
         }
 
-        public static string GetPrivateProfileString(string? section, string? key, string? _default, string fileName)
+        public static string GetPrivateProfileString(string? section, string? key, string? defaultValue, string fileName)
         {
-            var output = new char[byte.MaxValue];
-            var count = Win32.GetPrivateProfileStringW(section, key, _default, output, (uint)output.Length, fileName);
-            return new string(output, 0, (int)count);
+            var buffer = new char[short.MaxValue];
+            var length = Win32.GetPrivateProfileStringW(section, key, defaultValue, buffer, (uint)buffer.Length, fileName);
+            return new string(buffer, 0, (int)length);
         }
 
-        public static bool WindowExists(string? className, string? windowName)
+        public static int ExtractZipFile(string archiveFileName, string destinationDirectoryName)
         {
-            return Win32.FindWindowW(className, windowName) != IntPtr.Zero;
+            try
+            {
+                using var archive = ZipFile.OpenRead(archiveFileName);
+                foreach (var entry in archive.Entries)
+                {
+                    var destinationFileName = Path.Combine(destinationDirectoryName, entry.Name);
+                    entry.ExtractToFile(destinationFileName, true);
+                }
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                var log = new Log();
+                log.Write(ex.ToString());
+                return -1;
+            }
         }
     }
 }
