@@ -14,19 +14,19 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void FileName_IsNotEmpty()
+        public void FileNameShouldNotBeEmpty()
         {
             Assert.That(NewUpdater.FileName, Is.Not.Empty);
         }
 
         [Test]
-        public void Url_DoesEndWith_FileName()
+        public void UrlShouldEndWithFileName()
         {
             Assert.That(_newUpdater.Url, Does.EndWith(NewUpdater.FileName));
         }
 
         [Test]
-        public void Url_IsWellFormedUriString()
+        public void UrlShouldBeWellFormedUriString()
         {
             Assert.That(Uri.IsWellFormedUriString(_newUpdater.Url, UriKind.Absolute), Is.True);
         }

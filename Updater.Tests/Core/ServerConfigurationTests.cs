@@ -6,36 +6,36 @@ namespace Updater.Tests.Core
     public class ServerConfigurationTests
     {
         private static readonly HttpClient _httpClient = new();
-        private ServerConfiguration _serverCfg;
+        private ServerConfiguration _config;
 
         [SetUp]
         public void SetUp()
         {
-            _serverCfg = new ServerConfiguration(_httpClient);
+            _config = new ServerConfiguration(_httpClient);
         }
 
         [Test]
-        public void CheckVersion_Maybe_IsZero()
+        public void CheckVersionShouldBeZero()
         {
-            Assume.That(_serverCfg.CheckVersion, Is.Zero);
+            Assume.That(_config.CheckVersion, Is.Zero);
         }
 
         [Test]
-        public void FileName_IsNotEmpty()
+        public void FileNameShouldNotBeEmpty()
         {
             Assert.That(ServerConfiguration.FileName, Is.Not.Empty);
         }
 
         [Test]
-        public void PatchFileVersion_IsNotZero()
+        public void PatchFileVersionShouldNotBeZero()
         {
-            Assert.That(_serverCfg.PatchFileVersion, Is.Not.Zero);
+            Assert.That(_config.PatchFileVersion, Is.Not.Zero);
         }
 
         [Test]
-        public void UpdateVersion_Maybe_IsZero()
+        public void UpdateVersionShouldNotBeZero()
         {
-            Assume.That(_serverCfg.UpdaterVersion, Is.Zero);
+            Assert.That(_config.UpdaterVersion, Is.Not.Zero);
         }
     }
 }
