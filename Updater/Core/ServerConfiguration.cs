@@ -10,7 +10,7 @@ namespace Updater.Core
     public class ServerConfiguration
     {
         public const string FileName = "UpdateVersion.ini";
-        private readonly string Url = string.Empty;
+        public readonly string Url = string.Empty;
         public uint CheckVersion { get; } = 0;
         public uint PatchFileVersion { get; } = 2;
         public uint UpdaterVersion { get; } = 0;

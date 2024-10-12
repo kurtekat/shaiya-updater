@@ -8,8 +8,8 @@ namespace Updater.Core
     /// </summary>
     public class ClientConfiguration
     {
-        private const string FileName = "Version.ini";
-        private readonly string Path = string.Empty;
+        public const string FileName = "Version.ini";
+        public readonly string Path = string.Empty;
         public uint CheckVersion { get; } = 0;
         public uint CurrentVersion { get; set; } = 1;
         public string StartUpdate { get; } = string.Empty;
@@ -30,11 +30,6 @@ namespace Updater.Core
                 var log = new Log();
                 log.Write(ex.ToString());
             }
-        }
-
-        public int Write(string key, string value)
-        {
-            return Win32.WritePrivateProfileStringW("Version", key, value, Path);
         }
     }
 }
