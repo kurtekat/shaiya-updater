@@ -43,7 +43,7 @@ namespace Updater
                     }
 
                     worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage3, 0));
-                    clientCfg.Write("StartUpdate", "EXTRACT_START");
+                    Win32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientCfg.Path);
 
                     if (Util.ExtractZipFile(patch.Path) != 0)
                     {
@@ -51,11 +51,11 @@ namespace Updater
                         break;
                     }
 
-                    clientCfg.Write("StartUpdate", "EXTRACT_END");
+                    Win32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientCfg.Path);
                     File.Delete(patch.Path);
 
                     worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage5, 0));
-                    clientCfg.Write("StartUpdate", "UPDATE_START");
+                    Win32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientCfg.Path);
 
                     if (DataPatcher(worker) != 0)
                     {
@@ -63,7 +63,7 @@ namespace Updater
                         break;
                     }
 
-                    clientCfg.Write("StartUpdate", "UPDATE_END");
+                    Win32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_END", clientCfg.Path);
 
                     ++clientCfg.CurrentVersion;
                     ++progressValue;
@@ -72,11 +72,8 @@ namespace Updater
                     if (percentProgress != 0)
                         worker.ReportProgress((int)percentProgress, new ProgressReport(Constants.ProgressMessage7, 2));
 
-                    if (clientCfg.Write("CurrentVersion", clientCfg.CurrentVersion.ToString()) == 0)
-                    {
-                        worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage8, 0));
-                        break;
-                    }
+                    var currentVersion = clientCfg.CurrentVersion.ToString();
+                    Win32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientCfg.Path);
                 }
             }
         }
