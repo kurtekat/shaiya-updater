@@ -14,7 +14,7 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void CheckVersion_Maybe_IsZero()
+        public void CheckVersion_MaybeIsZero()
         {
             Assume.That(_clientCfg.CheckVersion, Is.Zero);
         }
@@ -26,7 +26,19 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void StartUpdate_Maybe_IsEmpty()
+        public void FileName_IsNotEmpty()
+        {
+            Assert.That(ClientConfiguration.FileName, Is.Not.Empty);
+        }
+
+        [Test]
+        public void Path_DoesEndWithFileName()
+        {
+            Assert.That(_clientCfg.Path, Does.EndWith(ClientConfiguration.FileName));
+        }
+
+        [Test]
+        public void StartUpdate_MaybeIsEmpty()
         {
             Assume.That(_clientCfg.StartUpdate, Is.Empty);
         }

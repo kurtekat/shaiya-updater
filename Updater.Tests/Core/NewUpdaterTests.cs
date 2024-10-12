@@ -20,7 +20,7 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void Url_DoesEndWith_FileName()
+        public void Url_DoesEndWithFileName()
         {
             Assert.That(_newUpdater.Url, Does.EndWith(NewUpdater.FileName));
         }

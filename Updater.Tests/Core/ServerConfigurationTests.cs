@@ -15,7 +15,7 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void CheckVersion_Maybe_IsZero()
+        public void CheckVersion_MaybeIsZero()
         {
             Assume.That(_serverCfg.CheckVersion, Is.Zero);
         }
@@ -33,9 +33,21 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void UpdateVersion_Maybe_IsZero()
+        public void UpdateVersion_MaybeIsZero()
         {
             Assume.That(_serverCfg.UpdaterVersion, Is.Zero);
+        }
+
+        [Test]
+        public void Url_DoesEndWithFileName()
+        {
+            Assert.That(_serverCfg.Url, Does.EndWith(ServerConfiguration.FileName));
+        }
+
+        [Test]
+        public void Url_IsWellFormedUriString()
+        {
+            Assert.That(Uri.IsWellFormedUriString(_serverCfg.Url, UriKind.Absolute), Is.True);
         }
     }
 }

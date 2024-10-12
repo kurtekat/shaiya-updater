@@ -18,19 +18,19 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void FileName_IsEqualTo_PatchFileName()
+        public void FileName_IsEqualToPatchFileName()
         {
             Assert.That(_patch.FileName, Is.EqualTo(PatchFileName));
         }
 
         [Test]
-        public void Path_DoesEndWith_PatchFileName()
+        public void Path_DoesEndWithPatchFileName()
         {
             Assert.That(_patch.Path, Does.EndWith(PatchFileName));
         }
 
         [Test]
-        public void Url_DoesEndWith_PatchFileName()
+        public void Url_DoesEndWithPatchFileName()
         {
             Assert.That(_patch.Url, Does.EndWith(PatchFileName));
         }
@@ -42,7 +42,7 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void Url_Maybe_DownloadToFile()
+        public void Url_MaybeDownloadToFile()
         {
             Util.DownloadToFile(_httpClient, _patch.Url, _patch.Path);
             Assume.That(File.Exists(_patch.Path), Is.True);
