@@ -10,31 +10,22 @@ namespace Updater.Core
     public class ServerConfiguration
     {
         public const string FileName = "UpdateVersion.ini";
-        private readonly string Url = string.Empty;
         public uint CheckVersion { get; } = 0;
         public uint PatchFileVersion { get; } = 2;
         public uint UpdaterVersion { get; } = 0;
 
         public ServerConfiguration(HttpClient httpClient)
         {
-            try
-            {
-                Url = $"{Constants.Source}/shaiya/{FileName}";
-                var path = Path.Combine(Directory.GetCurrentDirectory(), FileName);
-                Util.DownloadToFile(httpClient, Url, path);
+            var requestUri = $"{Constants.Source}/shaiya/{FileName}";
+            var path = Path.Combine(Directory.GetCurrentDirectory(), FileName);
+            Util.DownloadToFile(httpClient, requestUri, path);
 
-                if (File.Exists(path))
-                {
-                    CheckVersion = Win32.GetPrivateProfileIntW("Version", "CheckVersion", 0, path);
-                    PatchFileVersion = Win32.GetPrivateProfileIntW("Version", "PatchFileVersion", 2, path);
-                    UpdaterVersion = Win32.GetPrivateProfileIntW("Version", "UpdaterVersion", 0, path);
-                    File.Delete(path);
-                }
-            }
-            catch (Exception ex)
+            if (File.Exists(path))
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                CheckVersion = Win32.GetPrivateProfileIntW("Version", "CheckVersion", 0, path);
+                PatchFileVersion = Win32.GetPrivateProfileIntW("Version", "PatchFileVersion", 2, path);
+                UpdaterVersion = Win32.GetPrivateProfileIntW("Version", "UpdaterVersion", 0, path);
+                File.Delete(path);
             }
         }
     }

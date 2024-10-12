@@ -1,4 +1,3 @@
-﻿using Updater.Common;
 using Updater.Core;
 
 namespace Updater.Tests.Core
@@ -8,7 +7,6 @@ namespace Updater.Tests.Core
     {
         private const string PatchFileName = "ps0002.patch";
         private const uint PatchFileVersion = 2;
-        private static readonly HttpClient _httpClient = new();
         private Patch _patch;
 
         [SetUp]

@@ -18,6 +18,5 @@
         public const string ProgressMessage5 = "Updating";
         public const string ProgressMessage6 = "Update error";
         public const string ProgressMessage7 = "Update completed";
-        public const string ProgressMessage8 = "Save local version error";
     }
 }
