@@ -80,16 +80,11 @@ namespace Updater.Common
             return bitmapImage;
         }
 
-        public static string GetPrivateProfileString(string? section, string? key, string? _default, string fileName)
+        public static string GetPrivateProfileString(string? section, string? key, string? defaultValue, string fileName)
         {
-            var output = new char[byte.MaxValue];
-            var count = Win32.GetPrivateProfileStringW(section, key, _default, output, (uint)output.Length, fileName);
-            return new string(output, 0, (int)count);
-        }
-
-        public static bool WindowExists(string? className, string? windowName)
-        {
-            return Win32.FindWindowW(className, windowName) != IntPtr.Zero;
+            var buffer = new char[short.MaxValue];
+            var length = Win32.GetPrivateProfileStringW(section, key, defaultValue, buffer, (uint)buffer.Length, fileName);
+            return new string(buffer, 0, (int)length);
         }
     }
 }
