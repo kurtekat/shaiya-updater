@@ -77,13 +77,13 @@ namespace Updater
 
         private void Window1_Initialized(object sender, EventArgs e)
         {
-            if (Util.WindowExists(null, "Shaiya Updater"))
+            if (Win32.FindWindowW(null, "Shaiya Updater") != IntPtr.Zero)
             {
                 MessageBox.Show(Constants.Message1, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown(0);
             }
 
-            if (Util.WindowExists("GAME", "Shaiya"))
+            if (Win32.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
             {
                 MessageBox.Show(Constants.Message2, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown(0);
