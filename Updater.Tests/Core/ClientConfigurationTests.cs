@@ -14,31 +14,31 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void CheckVersion_MaybeIsZero()
+        public void CheckVersionShouldBeZero()
         {
             Assume.That(_clientCfg.CheckVersion, Is.Zero);
         }
 
         [Test]
-        public void CurrentVersion_IsNotZero()
+        public void CurrentVersionShouldNotBeZero()
         {
             Assert.That(_clientCfg.CurrentVersion, Is.Not.Zero);
         }
 
         [Test]
-        public void FileName_IsNotEmpty()
+        public void FileNameShouldNotBeEmpty()
         {
             Assert.That(ClientConfiguration.FileName, Is.Not.Empty);
         }
 
         [Test]
-        public void Path_DoesEndWithFileName()
+        public void PathShouldEndWithFileName()
         {
             Assert.That(_clientCfg.Path, Does.EndWith(ClientConfiguration.FileName));
         }
 
         [Test]
-        public void StartUpdate_MaybeIsEmpty()
+        public void StartUpdateShouldBeEmpty()
         {
             Assume.That(_clientCfg.StartUpdate, Is.Empty);
         }

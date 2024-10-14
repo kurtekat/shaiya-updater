@@ -14,7 +14,13 @@ namespace Updater.Tests.Common
         }
 
         [Test]
-        public void File_DoesContainContents()
+        public void FileNameShouldNotBeEmpty()
+        {
+            Assert.That(Log.FileName, Is.Not.Empty);
+        }
+
+        [Test]
+        public void FileShouldContainContents()
         {
             const string contents = "1234";
             _log.Write(contents);
@@ -24,13 +30,7 @@ namespace Updater.Tests.Common
         }
 
         [Test]
-        public void FileName_IsNotEmpty()
-        {
-            Assert.That(Log.FileName, Is.Not.Empty);
-        }
-
-        [Test]
-        public void Path_DoesEndWithFileName()
+        public void PathShouldEndWithFileName()
         {
             Assert.That(_log.Path, Does.EndWith(Log.FileName));
         }
