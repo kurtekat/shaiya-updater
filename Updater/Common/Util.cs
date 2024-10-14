@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Net.Http;
-using System.IO.Compression;
 using System.Windows.Media.Imaging;
 using System.Windows;
 
@@ -39,24 +38,6 @@ namespace Updater.Common
             {
                 var log = new Log();
                 log.Write(ex.ToString());
-            }
-        }
-
-        public static int ExtractZipFile(string fileName)
-        {
-            try
-            {
-                using var archive = ZipFile.OpenRead(fileName);
-                foreach (var entry in archive.Entries)
-                    ZipFileExtensions.ExtractToFile(entry, entry.FullName, true);
-
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                var log = new Log();
-                log.Write(ex.ToString());
-                return -1;
             }
         }
 
