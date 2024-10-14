@@ -1,4 +1,5 @@
 using System.IO;
+using System.IO.Compression;
 using Updater.Common;
 
 namespace Updater.Core
@@ -26,6 +27,22 @@ namespace Updater.Core
             {
                 var log = new Log();
                 log.Write(ex.ToString());
+            }
+        }
+
+        public int Extract(string toPath)
+        {
+            try
+            {
+                using var archive = ZipFile.OpenRead(Path);
+                archive.ExtractToDirectory(toPath, true);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                var log = new Log();
+                log.Write(ex.ToString());
+                return -1;
             }
         }
     }

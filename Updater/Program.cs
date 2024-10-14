@@ -45,7 +45,7 @@ namespace Updater
                     worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage3, 0));
                     Win32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientCfg.Path);
 
-                    if (Util.ExtractZipFile(patch.Path) != 0)
+                    if (patch.Extract(Directory.GetCurrentDirectory()) != 0)
                     {
                         worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage4, 0));
                         break;
