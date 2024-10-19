@@ -19,6 +19,9 @@ namespace Updater
 
                 if (serverCfg.PatchFileVersion > clientCfg.CurrentVersion)
                 {
+                    worker.ReportProgress(0, new ProgressReport(ByProgressBar: 1));
+                    worker.ReportProgress(0, new ProgressReport(ByProgressBar: 2));
+
                     uint progressMax = serverCfg.PatchFileVersion - clientCfg.CurrentVersion;
                     uint progressValue = 1;
 
@@ -28,34 +31,34 @@ namespace Updater
                         var patch = new Patch(version);
 
                         var progressMessage = string.Format(Constants.ProgressMessage1, progressValue, progressMax);
-                        worker.ReportProgress(0, new ProgressReport(progressMessage, 0));
+                        worker.ReportProgress(0, new ProgressReport(progressMessage));
 
                         Util.DownloadToFile(httpClient, patch.Url, patch.Path);
 
                         if (!File.Exists(patch.Path))
                         {
-                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage2, 0));
+                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage2));
                             break;
                         }
 
-                        worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage3, 0));
+                        worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage3));
                         Win32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientCfg.Path);
 
                         if (Util.ExtractZipFile(patch.Path, Directory.GetCurrentDirectory()) != 0)
                         {
-                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage4, 0));
+                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage4));
                             break;
                         }
 
                         Win32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientCfg.Path);
                         File.Delete(patch.Path);
 
-                        worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage5, 0));
+                        worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage5));
                         Win32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientCfg.Path);
 
                         if (DataPatcher(worker) != 0)
                         {
-                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage6, 0));
+                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage6));
                             break;
                         }
 
@@ -95,7 +98,7 @@ namespace Updater
                 }
 
                 if (update.FileCount == 0)
-                    return -1;
+                    throw new InvalidDataException();
 
                 int progressValue = 0;
 
@@ -103,11 +106,12 @@ namespace Updater
                 {
                     ++progressValue;
                     var percentProgress = ((double)progressValue / update.FileCount) * 100;
-                    worker.ReportProgress((int)percentProgress, new ProgressReport("", 1));
+                    worker.ReportProgress((int)percentProgress, new ProgressReport(ByProgressBar: 1));
                 }
 
-                using var dataPatcher = new DataPatcher();
-                dataPatcher.Patch(data, update, callback);
+                using (var dataPatcher = new DataPatcher())
+                    dataPatcher.Patch(data, update, callback);
+
                 data.Sah.Write(data.Sah.Path);
 
                 File.Delete("update.sah");
@@ -126,14 +130,14 @@ namespace Updater
         {
             try
             {
-                worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage0, 0));
+                worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage0));
 
                 var newUpdater = new NewUpdater();
                 Util.DownloadToFile(httpClient, newUpdater.Url, NewUpdater.FileName);
 
                 if (File.Exists(NewUpdater.FileName))
                 {
-                    worker.ReportProgress(100, new ProgressReport("", 2));
+                    worker.ReportProgress(100, new ProgressReport(ByProgressBar: 2));
 
                     var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
                     Process.Start(fileName, "new updater");
@@ -141,7 +145,7 @@ namespace Updater
                 }
                 else
                 {
-                    worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage2, 0));
+                    worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage2));
                 }
             }
             catch (Exception ex)
