@@ -44,13 +44,7 @@ namespace Updater
             if (sender is null)
                 return;
 
-            if (sender is HttpRequestMessage request && request.RequestUri is not null)
-            {
-                if (request.RequestUri.AbsolutePath.EndsWith(ServerConfiguration.FileName))
-                    return;
-            }
-
-            _backgroundWorker1.ReportProgress(e.ProgressPercentage, new ProgressReport("", 1));
+            _backgroundWorker1.ReportProgress(e.ProgressPercentage, new ProgressReport(ByProgressBar: 1));
         }
 
         private void BackgroundWorker1_DoWork(object? sender, DoWorkEventArgs e)
@@ -160,7 +154,11 @@ namespace Updater
             _window1.Icon = _icon3.Source;
             _button1.Content = _image185;
             _button2.Content = _image168;
-            _webBrowser1.Source = new Uri(Constants.WebBrowserSource);
+
+            var uriString = Constants.WebBrowserSource;
+            if (Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
+                _webBrowser1.Source = new Uri(uriString);
+
             _backgroundWorker1.RunWorkerAsync();
         }
 
