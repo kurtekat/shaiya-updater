@@ -154,11 +154,7 @@ namespace Updater
             _window1.Icon = _icon3.Source;
             _button1.Content = _image185;
             _button2.Content = _image168;
-
-            var uriString = Constants.WebBrowserSource;
-            if (Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
-                _webBrowser1.Source = new Uri(uriString);
-
+            _webBrowser1.Navigate(Constants.WebBrowserSource);
             _backgroundWorker1.RunWorkerAsync();
         }
 
