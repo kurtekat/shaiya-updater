@@ -28,7 +28,7 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void ShouldThrowException()
+        public void ShouldThrowArgumentOutOfRangeException()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new Patch(10000));
         }
