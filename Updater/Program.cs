@@ -101,9 +101,10 @@ namespace Updater
                     File.Delete("delete.lst");
                 }
 
-                var progress = new DataPatcherProgress(update.FileCount, worker);
+                var progressReport = new ProgressReport(ByProgressBar: 1);
+                var progress = new PatchProgress(update.FileCount, worker, progressReport);
                 using (var dataPatcher = new DataPatcher())
-                    dataPatcher.Patch(data, update, progress.FilePatchedCallback);
+                    dataPatcher.Patch(data, update, progress.PerformStep);
 
                 data.Sah.Write(data.Sah.Path);
 

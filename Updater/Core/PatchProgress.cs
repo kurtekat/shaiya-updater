@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel;
-using Updater.Common;
 
 namespace Updater.Core
 {
-    public class DataPatcherProgress
+    public class PatchProgress
     {
         private readonly BackgroundWorker _backgroundWorker = new();
+        private readonly object? _userState = null;
         public int Maximum { get; } = 0;
         public int Value { get; set; } = 0;
 
-        public DataPatcherProgress(int fileCount, BackgroundWorker worker)
+        public PatchProgress(int fileCount, BackgroundWorker worker, object? userState = null)
         {
             if (fileCount <= 0)
                 throw new ArgumentOutOfRangeException(nameof(fileCount));
@@ -17,13 +17,14 @@ namespace Updater.Core
             Maximum = fileCount;
             _backgroundWorker = worker;
             _backgroundWorker.WorkerReportsProgress = true;
+            _userState = userState;
         }
 
-        public void FilePatchedCallback()
+        public void PerformStep()
         {
             Value++;
             var percentProgress = (double)(Value / Maximum) * 100;
-            _backgroundWorker.ReportProgress((int)percentProgress, new ProgressReport(ByProgressBar: 1));
+            _backgroundWorker.ReportProgress((int)percentProgress, _userState);
         }
     }
 }
