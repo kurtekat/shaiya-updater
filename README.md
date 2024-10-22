@@ -59,7 +59,7 @@ https://github.com/kurtekat/kurtekat.github.io
 ### Web
 
 ```csharp
-// Updater/Core/Constants.cs
+// Updater/Common/Constants.cs
 public const string Source = "https://kurtekat.github.io";
 public const string WebBrowserSource = "https://google.com";
 ```
@@ -77,7 +77,7 @@ https://www.elitepvpers.com/forum/shaiya-pserver-guides-releases/4937732-guide-h
 Assign `UpdaterVersion` and build the application.
 
 ```csharp
-// Updater/Core/Constants.cs
+// Updater/Common/Constants.cs
 public const uint UpdaterVersion = 2;
 ```
 
