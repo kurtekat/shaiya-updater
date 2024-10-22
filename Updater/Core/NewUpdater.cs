@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Updater.Common;
 
 namespace Updater.Core
 {
