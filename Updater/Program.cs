@@ -5,11 +5,21 @@ using System.Net.Http;
 using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Core;
+using Updater.Imports;
 
 namespace Updater
 {
     public static class Program
     {
+        private const string Message1 = "Downloading updater";
+        private const string Message2 = "Downloading ({0}/{1})";
+        private const string Message3 = "Download failed";
+        private const string Message4 = "Extracting";
+        private const string Message5 = "Extraction failed";
+        private const string Message6 = "Updating";
+        private const string Message7 = "Update error";
+        private const string Message8 = "Update completed";
+
         public static void DoWork(HttpClient httpClient, BackgroundWorker worker)
         {
             try
@@ -33,7 +43,7 @@ namespace Updater
 
                     while (clientCfg.CurrentVersion < serverCfg.PatchFileVersion)
                     {
-                        var progressMessage = string.Format(Constants.ProgressMessage1, progressValue, progressMax);
+                        var progressMessage = string.Format(Message2, progressValue, progressMax);
                         worker.ReportProgress(0, new ProgressReport(progressMessage));
 
                         var patch = new Patch(clientCfg.CurrentVersion + 1);
@@ -41,42 +51,42 @@ namespace Updater
 
                         if (!File.Exists(patch.Path))
                         {
-                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage2));
+                            worker.ReportProgress(0, new ProgressReport(Message3));
                             break;
                         }
 
-                        worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage3));
-                        Win32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientCfg.Path);
+                        worker.ReportProgress(0, new ProgressReport(Message4));
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientCfg.Path);
 
                         if (Util.ExtractZipFile(patch.Path, Directory.GetCurrentDirectory()) != 0)
                         {
-                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage4));
+                            worker.ReportProgress(0, new ProgressReport(Message5));
                             break;
                         }
 
-                        Win32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientCfg.Path);
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientCfg.Path);
                         File.Delete(patch.Path);
 
-                        worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage5));
-                        Win32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientCfg.Path);
+                        worker.ReportProgress(0, new ProgressReport(Message6));
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientCfg.Path);
 
                         if (DataPatcher(worker) != 0)
                         {
-                            worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage6));
+                            worker.ReportProgress(0, new ProgressReport(Message7));
                             break;
                         }
 
-                        Win32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_END", clientCfg.Path);
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_END", clientCfg.Path);
 
                         ++clientCfg.CurrentVersion;
                         ++progressValue;
 
                         var percentProgress = ((double)clientCfg.CurrentVersion / serverCfg.PatchFileVersion) * 100;
                         if (percentProgress != 0)
-                            worker.ReportProgress((int)percentProgress, new ProgressReport(Constants.ProgressMessage7, 2));
+                            worker.ReportProgress((int)percentProgress, new ProgressReport(Message8, 2));
 
                         var currentVersion = clientCfg.CurrentVersion.ToString();
-                        Win32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientCfg.Path);
+                        Kernel32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientCfg.Path);
                     }
                 }
             }
@@ -87,7 +97,7 @@ namespace Updater
             }
         }
 
-        public static int DataPatcher(BackgroundWorker worker)
+        private static int DataPatcher(BackgroundWorker worker)
         {
             try
             {
@@ -120,18 +130,18 @@ namespace Updater
             }
         }
 
-        public static void UpdaterPatcher(HttpClient httpClient, BackgroundWorker worker)
+        private static void UpdaterPatcher(HttpClient httpClient, BackgroundWorker worker)
         {
             try
             {
-                worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage0));
+                worker.ReportProgress(0, new ProgressReport(Message1));
 
                 var newUpdater = new NewUpdater();
                 Util.DownloadToFile(httpClient, newUpdater.Url, newUpdater.Path);
 
                 if (!File.Exists(newUpdater.Path))
                 {
-                    worker.ReportProgress(0, new ProgressReport(Constants.ProgressMessage2));
+                    worker.ReportProgress(0, new ProgressReport(Message3));
                     return;
                 }
 

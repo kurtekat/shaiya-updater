@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using Updater.Common;
+using Updater.Imports;
 
 namespace Updater.Core
 {
@@ -22,9 +23,9 @@ namespace Updater.Core
 
             if (File.Exists(path))
             {
-                CheckVersion = Win32.GetPrivateProfileIntW("Version", "CheckVersion", 0, path);
-                PatchFileVersion = Win32.GetPrivateProfileIntW("Version", "PatchFileVersion", 2, path);
-                UpdaterVersion = Win32.GetPrivateProfileIntW("Version", "UpdaterVersion", 0, path);
+                CheckVersion = Kernel32.GetPrivateProfileIntW("Version", "CheckVersion", 0, path);
+                PatchFileVersion = Kernel32.GetPrivateProfileIntW("Version", "PatchFileVersion", 2, path);
+                UpdaterVersion = Kernel32.GetPrivateProfileIntW("Version", "UpdaterVersion", 0, path);
                 File.Delete(path);
             }
         }

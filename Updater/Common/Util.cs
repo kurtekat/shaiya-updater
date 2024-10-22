@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.IO.Compression;
+using Updater.Imports;
 
 namespace Updater.Common
 {
@@ -66,7 +67,7 @@ namespace Updater.Common
         public static string GetPrivateProfileString(string? section, string? key, string? defaultValue, string fileName)
         {
             var buffer = new char[short.MaxValue];
-            var length = Win32.GetPrivateProfileStringW(section, key, defaultValue, buffer, (uint)buffer.Length, fileName);
+            var length = Kernel32.GetPrivateProfileStringW(section, key, defaultValue, buffer, (uint)buffer.Length, fileName);
             return new string(buffer, 0, (int)length);
         }
 

@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Updater.Common;
-using Updater.Core;
+using Updater.Imports;
 
 namespace Updater
 {
@@ -71,15 +71,19 @@ namespace Updater
 
         private void Window1_Initialized(object sender, EventArgs e)
         {
-            if (Win32.FindWindowW(null, "Shaiya Updater") != IntPtr.Zero)
+            if (User32.FindWindowW(null, "Shaiya Updater") != IntPtr.Zero)
             {
-                MessageBox.Show(Constants.Message1, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var message = "Updater already in operation.";
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
-            if (Win32.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
+            if (User32.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
             {
-                MessageBox.Show(Constants.Message2, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var message = "Game still in operation. Please try again after closing the game.";
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
@@ -203,7 +207,8 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown();
             }
         }

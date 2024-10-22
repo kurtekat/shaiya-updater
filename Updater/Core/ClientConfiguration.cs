@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Updater.Common;
+using Updater.Imports;
 
 namespace Updater.Core
 {
@@ -17,8 +18,8 @@ namespace Updater.Core
         public ClientConfiguration()
         {
             Path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName);
-            CheckVersion = Win32.GetPrivateProfileIntW("Version", "CheckVersion", 0, Path);
-            CurrentVersion = Win32.GetPrivateProfileIntW("Version", "CurrentVersion", 1, Path);
+            CheckVersion = Kernel32.GetPrivateProfileIntW("Version", "CheckVersion", 0, Path);
+            CurrentVersion = Kernel32.GetPrivateProfileIntW("Version", "CurrentVersion", 1, Path);
             StartUpdate = Util.GetPrivateProfileString("Version", "StartUpdate", "", Path);
         }
     }
