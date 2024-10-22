@@ -5,13 +5,20 @@ namespace Updater.Tests.Core
     [TestFixture]
     public class ServerConfigurationTests
     {
-        private static readonly HttpClient _httpClient = new();
+        private HttpClient _httpClient;
         private ServerConfiguration _config;
 
         [SetUp]
         public void SetUp()
         {
+            _httpClient = new HttpClient();
             _config = new ServerConfiguration(_httpClient);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _httpClient.Dispose();
         }
 
         [Test]

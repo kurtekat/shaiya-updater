@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Updater.Common;
 using Updater.Core;
 
 namespace Updater.Tests.Core
@@ -7,14 +8,22 @@ namespace Updater.Tests.Core
     public class PatchProgressTests
     {
         private const int FileCount = 10;
-        private static readonly BackgroundWorker _backgroundWorker = new();
+        private BackgroundWorker _backgroundWorker;
+        private ProgressReport _progressReport;
         private PatchProgress _progress;
 
         [SetUp]
         public void SetUp()
         {
-            _backgroundWorker.WorkerReportsProgress = true;
-            _progress = new PatchProgress(FileCount, _backgroundWorker);
+            _backgroundWorker = new BackgroundWorker();
+            _progressReport = new ProgressReport();
+            _progress = new PatchProgress(FileCount, _backgroundWorker, _progressReport);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _backgroundWorker.Dispose();
         }
 
         [Test]
@@ -26,7 +35,7 @@ namespace Updater.Tests.Core
         [Test]
         public void ShouldThrowArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new PatchProgress(0, _backgroundWorker));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new PatchProgress(0, _backgroundWorker, _progressReport));
         }
 
         [Test]
