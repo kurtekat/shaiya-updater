@@ -209,7 +209,7 @@ namespace Updater
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
                 MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown();
+                Application.Current.Shutdown(ex.HResult);
             }
         }
 
