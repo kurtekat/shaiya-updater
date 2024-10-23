@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Windows;
 using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Core;
@@ -92,8 +93,8 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -124,8 +125,8 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
                 return -1;
             }
         }
@@ -151,8 +152,8 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

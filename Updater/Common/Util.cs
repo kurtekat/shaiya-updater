@@ -20,8 +20,8 @@ namespace Updater.Common
             }
             catch (Exception ex)
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
                 return string.Empty;
             }
         }
@@ -39,8 +39,8 @@ namespace Updater.Common
             }
             catch (Exception ex)
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -57,8 +57,8 @@ namespace Updater.Common
             }
             catch (Exception ex)
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return bitmapImage;
@@ -86,8 +86,8 @@ namespace Updater.Common
             }
             catch (Exception ex)
             {
-                var log = new Log();
-                log.Write(ex.ToString());
+                var caption = Application.ResourceAssembly.GetName().Name;
+                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
                 return -1;
             }
         }
