@@ -71,7 +71,8 @@ namespace Updater
 
         private void Window1_Initialized(object sender, EventArgs e)
         {
-            if (User32.FindWindowW(null, "Shaiya Updater") != IntPtr.Zero)
+            var windowName = Application.Current.MainWindow.Title;
+            if (User32.FindWindowW(null, windowName) != IntPtr.Zero)
             {
                 var message = "Updater already in operation.";
                 var caption = Application.ResourceAssembly.GetName().Name;
@@ -203,7 +204,7 @@ namespace Updater
             {
                 var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
                 Process.Start(fileName, "start game");
-                Application.Current.Shutdown(0);
+                Kernel32.TerminateProcess(Kernel32.GetCurrentProcess(), 0);
             }
             catch (Exception ex)
             {
