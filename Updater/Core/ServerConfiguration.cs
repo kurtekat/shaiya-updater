@@ -11,9 +11,9 @@ namespace Updater.Core
     public class ServerConfiguration
     {
         public const string FileName = "UpdateVersion.ini";
-        public uint CheckVersion { get; } = 0;
+        public uint CheckVersion { get; }
         public uint PatchFileVersion { get; } = 2;
-        public uint UpdaterVersion { get; } = 0;
+        public uint UpdaterVersion { get; }
 
         public ServerConfiguration(HttpClient httpClient)
         {

@@ -7,8 +7,8 @@ namespace Updater.Core
     {
         private readonly BackgroundWorker _backgroundWorker;
         private readonly ProgressReport _progressReport;
-        public int Maximum { get; } = 0;
-        public int Value { get; set; } = 0;
+        public int Maximum { get; }
+        public int Value { get; set; }
 
         public PatchProgress(int fileCount, BackgroundWorker worker, ProgressReport progressReport)
         {

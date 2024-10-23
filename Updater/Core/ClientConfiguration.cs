@@ -11,7 +11,7 @@ namespace Updater.Core
     {
         public const string FileName = "Version.ini";
         public readonly string Path = string.Empty;
-        public uint CheckVersion { get; } = 0;
+        public uint CheckVersion { get; }
         public uint CurrentVersion { get; set; } = 1;
         public string StartUpdate { get; } = string.Empty;
 

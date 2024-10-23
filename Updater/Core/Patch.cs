@@ -12,7 +12,6 @@ namespace Updater.Core
         public Patch(uint version)
         {
             const uint maxVersion = 9999;
-
             if (version > maxVersion)
                 throw new ArgumentOutOfRangeException(nameof(version));
 
