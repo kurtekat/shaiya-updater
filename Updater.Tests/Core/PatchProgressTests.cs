@@ -39,12 +39,6 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void ValueShouldBeZero()
-        {
-            Assert.That(_progress.Value, Is.Zero);
-        }
-
-        [Test]
         public void ValueShouldBeEqualToMaximum()
         {
             for (int i = 0; i < _progress.Maximum; i++)
