@@ -18,7 +18,7 @@ Windows Presentation Foundation (WPF)
 
 [Microsoft.AspNet.WebApi.Client](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client/)
 
-[Parsec](https://github.com/matigramirez/Parsec)
+[Parsec.Shaiya.Data](https://www.nuget.org/packages/Parsec.Shaiya.Data/)
 
 ## Build
 
