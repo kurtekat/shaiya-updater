@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Updater.Common;
+using Updater.Core;
 using Updater.Imports;
 using Updater.Resources;
 
@@ -90,64 +91,64 @@ namespace Updater
             var icon3 = Util.BitmapImageFromManifestResource("Updater.Resources.Icon.Icon3.ico");
             if (icon3.StreamSource is not null)
             {
-                _icon3.Width = 48;
-                _icon3.Height = 48;
+                _icon3.Width = icon3.PixelWidth;
+                _icon3.Height = icon3.PixelHeight;
                 _icon3.Source = icon3;
             }
 
             var image167 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap167.bmp");
             if (image167.StreamSource is not null)
             {
-                _image167.Width = 750;
-                _image167.Height = 550;
+                _image167.Width = image167.PixelWidth;
+                _image167.Height = image167.PixelHeight;
                 _image167.Source = image167;
             }
 
             var image168 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap168.bmp");
             if (image168.StreamSource is not null)
             {
-                _image168.Width = 148;
-                _image168.Height = 38;
+                _image168.Width = image168.PixelWidth;
+                _image168.Height = image168.PixelHeight;
                 _image168.Source = image168;
             }
 
             var image169 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap169.bmp");
             if (image169.StreamSource is not null)
             {
-                _image169.Width = 148;
-                _image169.Height = 38;
+                _image169.Width = image169.PixelWidth;
+                _image169.Height = image169.PixelHeight;
                 _image169.Source = image169;
             }
 
             var image170 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap170.bmp");
             if (image170.StreamSource is not null)
             {
-                _image170.Width = 148;
-                _image170.Height = 38;
+                _image170.Width = image170.PixelWidth;
+                _image170.Height = image170.PixelHeight;
                 _image170.Source = image170;
             }
 
             var image185 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap185.bmp");
             if (image185.StreamSource is not null)
             {
-                _image185.Width = 26;
-                _image185.Height = 24;
+                _image185.Width = image185.PixelWidth;
+                _image185.Height = image185.PixelHeight;
                 _image185.Source = image185;
             }
 
             var image187 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap187.bmp");
             if (image187.StreamSource is not null)
             {
-                _image187.Width = 26;
-                _image187.Height = 24;
+                _image187.Width = image187.PixelWidth;
+                _image187.Height = image187.PixelHeight;
                 _image187.Source = image187;
             }
 
             var image188 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap188.bmp");
             if (image188.StreamSource is not null)
             {
-                _image188.Width = 26;
-                _image188.Height = 24;
+                _image188.Width = image188.PixelWidth;
+                _image188.Height = image188.PixelHeight;
                 _image188.Source = image188;
             }
         }
