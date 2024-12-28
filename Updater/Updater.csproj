@@ -17,8 +17,8 @@
     <RepositoryType>git</RepositoryType>
     <ApplicationIcon>Resources\Icon\Icon3.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.1.5.0</AssemblyVersion>
-    <FileVersion>1.1.5.0</FileVersion>
+    <AssemblyVersion>1.1.6.0</AssemblyVersion>
+    <FileVersion>1.1.6.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -51,6 +51,21 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Parsec.Shaiya.Data" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
