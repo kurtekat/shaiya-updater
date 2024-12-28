@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Updater.Common;
 
 namespace Updater.Core
 {

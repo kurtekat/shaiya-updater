@@ -1,4 +1,4 @@
-﻿using Updater.Common;
+﻿using Updater.Core;
 
 namespace Updater.Tests.Common
 {
