@@ -7,20 +7,12 @@ using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Core;
 using Updater.Imports;
+using Updater.Resources;
 
 namespace Updater
 {
     public static class Program
     {
-        private const string Message1 = "Downloading updater";
-        private const string Message2 = "Downloading ({0}/{1})";
-        private const string Message3 = "Download failed";
-        private const string Message4 = "Extracting";
-        private const string Message5 = "Extraction failed";
-        private const string Message6 = "Updating";
-        private const string Message7 = "Update error";
-        private const string Message8 = "Update completed";
-
         public static void DoWork(HttpClient httpClient, BackgroundWorker worker)
         {
             try
@@ -44,7 +36,7 @@ namespace Updater
 
                     while (clientCfg.CurrentVersion < serverCfg.PatchFileVersion)
                     {
-                        var progressMessage = string.Format(Message2, progressValue, progressMax);
+                        var progressMessage = string.Format(Strings.ProgressMessage2, progressValue, progressMax);
                         worker.ReportProgress(0, new ProgressReport(progressMessage));
 
                         var patch = new Patch(clientCfg.CurrentVersion + 1);
@@ -52,28 +44,28 @@ namespace Updater
 
                         if (!File.Exists(patch.Path))
                         {
-                            worker.ReportProgress(0, new ProgressReport(Message3));
+                            worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage3));
                             break;
                         }
 
-                        worker.ReportProgress(0, new ProgressReport(Message4));
+                        worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientCfg.Path);
 
                         if (Util.ExtractZipFile(patch.Path, Directory.GetCurrentDirectory()) != 0)
                         {
-                            worker.ReportProgress(0, new ProgressReport(Message5));
+                            worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage5));
                             break;
                         }
 
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientCfg.Path);
                         File.Delete(patch.Path);
 
-                        worker.ReportProgress(0, new ProgressReport(Message6));
+                        worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage6));
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientCfg.Path);
 
                         if (DataPatcher(worker) != 0)
                         {
-                            worker.ReportProgress(0, new ProgressReport(Message7));
+                            worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage7));
                             break;
                         }
 
@@ -84,7 +76,7 @@ namespace Updater
 
                         var percentProgress = ((double)clientCfg.CurrentVersion / serverCfg.PatchFileVersion) * 100;
                         if (percentProgress != 0)
-                            worker.ReportProgress((int)percentProgress, new ProgressReport(Message8, 2));
+                            worker.ReportProgress((int)percentProgress, new ProgressReport(Strings.ProgressMessage8, 2));
 
                         var currentVersion = clientCfg.CurrentVersion.ToString();
                         Kernel32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientCfg.Path);
@@ -135,14 +127,14 @@ namespace Updater
         {
             try
             {
-                worker.ReportProgress(0, new ProgressReport(Message1));
+                worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage1));
 
                 var newUpdater = new NewUpdater();
                 Util.DownloadToFile(httpClient, newUpdater.Url, newUpdater.Path);
 
                 if (!File.Exists(newUpdater.Path))
                 {
-                    worker.ReportProgress(0, new ProgressReport(Message3));
+                    worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage3));
                     return;
                 }
 

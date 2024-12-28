@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Updater.Common;
 using Updater.Imports;
+using Updater.Resources;
 
 namespace Updater
 {
@@ -74,17 +75,15 @@ namespace Updater
             var windowName = Application.Current.MainWindow.Title;
             if (User32.FindWindowW(null, windowName) != IntPtr.Zero)
             {
-                var message = "Updater already in operation.";
                 var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Strings.Message1, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
             if (User32.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
             {
-                var message = "Game still in operation. Please try again after closing the game.";
                 var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Strings.Message2, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
