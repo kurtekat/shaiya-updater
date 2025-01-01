@@ -17,29 +17,29 @@ namespace Updater
         {
             try
             {
-                var serverCfg = new ServerConfiguration(httpClient);
-                var clientCfg = new ClientConfiguration();
+                var serverConfiguration = new ServerConfiguration(httpClient);
+                var clientConfiguration = new ClientConfiguration();
 
-                if (serverCfg.UpdaterVersion > Constants.UpdaterVersion)
+                if (serverConfiguration.UpdaterVersion > Constants.UpdaterVersion)
                 {
                     UpdaterPatcher(httpClient, worker);
                     return;
                 }
 
-                if (serverCfg.PatchFileVersion > clientCfg.CurrentVersion)
+                if (serverConfiguration.PatchFileVersion > clientConfiguration.CurrentVersion)
                 {
                     worker.ReportProgress(0, new ProgressReport(ByProgressBar: 1));
                     worker.ReportProgress(0, new ProgressReport(ByProgressBar: 2));
 
-                    uint progressMax = serverCfg.PatchFileVersion - clientCfg.CurrentVersion;
+                    uint progressMax = serverConfiguration.PatchFileVersion - clientConfiguration.CurrentVersion;
                     uint progressValue = 1;
 
-                    while (clientCfg.CurrentVersion < serverCfg.PatchFileVersion)
+                    while (clientConfiguration.CurrentVersion < serverConfiguration.PatchFileVersion)
                     {
                         var progressMessage = string.Format(Strings.ProgressMessage2, progressValue, progressMax);
                         worker.ReportProgress(0, new ProgressReport(progressMessage));
 
-                        var patch = new Patch(clientCfg.CurrentVersion + 1);
+                        var patch = new Patch(clientConfiguration.CurrentVersion + 1);
                         Util.DownloadToFile(httpClient, patch.Url, patch.Path);
 
                         if (!File.Exists(patch.Path))
@@ -49,7 +49,7 @@ namespace Updater
                         }
 
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientCfg.Path);
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientConfiguration.Path);
 
                         if (Util.ExtractZipFile(patch.Path, Directory.GetCurrentDirectory()) != 0)
                         {
@@ -57,11 +57,11 @@ namespace Updater
                             break;
                         }
 
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientCfg.Path);
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientConfiguration.Path);
                         File.Delete(patch.Path);
 
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage6));
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientCfg.Path);
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientConfiguration.Path);
 
                         if (DataPatcher(worker) != 0)
                         {
@@ -69,17 +69,17 @@ namespace Updater
                             break;
                         }
 
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_END", clientCfg.Path);
+                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_END", clientConfiguration.Path);
 
-                        ++clientCfg.CurrentVersion;
+                        ++clientConfiguration.CurrentVersion;
                         ++progressValue;
 
-                        var percentProgress = ((double)clientCfg.CurrentVersion / serverCfg.PatchFileVersion) * 100;
+                        var percentProgress = ((double)clientConfiguration.CurrentVersion / serverConfiguration.PatchFileVersion) * 100;
                         if (percentProgress != 0)
                             worker.ReportProgress((int)percentProgress, new ProgressReport(Strings.ProgressMessage8, 2));
 
-                        var currentVersion = clientCfg.CurrentVersion.ToString();
-                        Kernel32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientCfg.Path);
+                        var currentVersion = clientConfiguration.CurrentVersion.ToString();
+                        Kernel32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientConfiguration.Path);
                     }
                 }
             }
