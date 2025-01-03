@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Handlers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Updater.Common;
 using Updater.Core;
@@ -39,6 +40,9 @@ namespace Updater
             var handler = new ProgressMessageHandler(new HttpClientHandler());
             handler.HttpReceiveProgress += ProgressMessageHandler_HttpReceiveProgress;
             _httpClient = new HttpClient(handler, true);
+
+            _button1.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(Button1_Click), true);
+            _button2.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(Button2_Click), true);
         }
 
         private void ProgressMessageHandler_HttpReceiveProgress(object? sender, HttpProgressEventArgs e)
@@ -163,40 +167,41 @@ namespace Updater
             _backgroundWorker1.RunWorkerAsync();
         }
 
-        private void Window1_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Window1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
-            _button1.Content = _image188;
-
             if (_backgroundWorker1.IsBusy)
                 return;
 
             Application.Current.Shutdown(0);
         }
 
-        private void Button1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Button1_MouseEnter(object sender, MouseEventArgs e)
         {
             _button1.Content = _image187;
         }
 
-        private void Button1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Button1_MouseLeave(object sender, MouseEventArgs e)
         {
             _button1.Content = _image185;
         }
 
-        private void Button1_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Button1_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _button1.Content = _image188;
+        }
+
+        private void Button1_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _button1.Content = _image187;
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            _button2.Content = _image170;
-
             if (_backgroundWorker1.IsBusy)
                 return;
 
@@ -214,17 +219,22 @@ namespace Updater
             }
         }
 
-        private void Button2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Button2_MouseEnter(object sender, MouseEventArgs e)
         {
             _button2.Content = _image169;
         }
 
-        private void Button2_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Button2_MouseLeave(object sender, MouseEventArgs e)
         {
             _button2.Content = _image168;
         }
 
-        private void Button2_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Button2_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _button2.Content = _image170;
+        }
+
+        private void Button2_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _button2.Content = _image169;
         }
