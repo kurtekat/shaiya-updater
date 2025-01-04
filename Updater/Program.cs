@@ -22,7 +22,8 @@ namespace Updater
 
                 if (serverConfiguration.UpdaterVersion > Constants.UpdaterVersion)
                 {
-                    UpdaterPatcher(httpClient, worker);
+                    worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage1));
+                    UpdaterPatcher(httpClient);
                     return;
                 }
 
@@ -123,20 +124,24 @@ namespace Updater
             }
         }
 
-        private static void UpdaterPatcher(HttpClient httpClient, BackgroundWorker worker)
+        /// <summary>
+        /// Downloads a new updater, starts a client process, passing "new updater" as the 
+        /// command-line argument, and terminates the current process.
+        /// 
+        /// Expect the client to rename the new updater, delete the old updater and create 
+        /// an updater process.
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <returns>Zero on failure. Otherwise, nonzero.</returns>
+        private static void UpdaterPatcher(HttpClient httpClient)
         {
             try
             {
-                worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage1));
-
                 var newUpdater = new NewUpdater();
                 Util.DownloadToFile(httpClient, newUpdater.Url, newUpdater.Path);
 
                 if (!File.Exists(newUpdater.Path))
-                {
-                    worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage3));
                     return;
-                }
 
                 var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
                 Process.Start(fileName, "new updater");
