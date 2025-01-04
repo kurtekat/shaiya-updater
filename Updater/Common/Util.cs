@@ -44,24 +44,26 @@ namespace Updater.Common
             }
         }
 
-        public static BitmapImage BitmapImageFromManifestResource(string name)
+        public static BitmapImage? BitmapImageFromManifestResource(string name)
         {
-            var bitmapImage = new BitmapImage();
-
             try
             {
-                using var stream = Application.ResourceAssembly.GetManifestResourceStream(name);
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = stream;
-                bitmapImage.EndInit();
+                var bitmapImage = new BitmapImage();
+                using (var stream = Application.ResourceAssembly.GetManifestResourceStream(name))
+                {
+                    bitmapImage.BeginInit();
+                    bitmapImage.StreamSource = stream;
+                    bitmapImage.EndInit();
+                }
+
+                return bitmapImage;
             }
             catch (Exception ex)
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
                 MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
             }
-
-            return bitmapImage;
         }
 
         public static string GetPrivateProfileString(string? section, string? key, string? defaultValue, string fileName)
