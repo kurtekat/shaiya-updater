@@ -53,6 +53,8 @@ namespace Updater
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientConfiguration.Path);
 
+                        // Issue: antivirus software could be scanning a file from a previous patch
+                        // when this method tries to overwrite it.
                         if (!patch.ExtractToCurrentDirectory())
                         {
                             worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage5));

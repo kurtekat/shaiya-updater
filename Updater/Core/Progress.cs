@@ -81,8 +81,7 @@ namespace Updater.Core
         }
 
         /// <summary>
-        /// Advances the current <see cref="Value"/> by the specified amount and 
-        /// raises the <see cref="BackgroundWorker.ProgressChanged"/> event.
+        /// Advances the current <see cref="Value"/> by the specified amount and raises the <see cref="BackgroundWorker.ProgressChanged"/> event.
         /// </summary>
         /// <param name="value">The amount by which to increment the current <see cref="Value"/>.</param>
         public void Increment(int value)

@@ -47,7 +47,7 @@ namespace Updater.Core
         /// <summary>
         /// Extracts all of the files in the archive to the current working directory of the application.
         /// </summary>
-        /// <returns>False if the file does not exist or an exception is caught. Otherwise, true.</returns>
+        /// <returns><see langword="false"/> if the file does not exist or an exception is caught. Otherwise, <see langword="true"/>.</returns>
         public bool ExtractToCurrentDirectory()
         {
             if (Exists())
