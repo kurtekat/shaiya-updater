@@ -90,61 +90,45 @@ namespace Updater
 
         private static void DataPatcher(BackgroundWorker worker)
         {
-            try
+            var data = new Data("data.sah", "data.saf");
+            var update = new Data("update.sah", "update.saf");
+
+            if (File.Exists("delete.lst"))
             {
-                var data = new Data("data.sah", "data.saf");
-                var update = new Data("update.sah", "update.saf");
-
-                if (File.Exists("delete.lst"))
-                {
-                    data.RemoveFilesFromLst("delete.lst");
-                    data.Sah.Write(data.Sah.Path);
-                    File.Delete("delete.lst");
-                }
-
-                var progressReport = new ProgressReport(ByProgressBar: 1);
-                var progress = new PatchProgress(update.FileCount, worker, progressReport);
-                using (var dataPatcher = new DataPatcher())
-                    dataPatcher.Patch(data, update, progress.PerformStep);
-
+                data.RemoveFilesFromLst("delete.lst");
                 data.Sah.Write(data.Sah.Path);
-                File.Delete("update.sah");
-                File.Delete("update.saf");
+                File.Delete("delete.lst");
             }
-            catch (Exception ex)
-            {
-                var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
+            var progressReport = new ProgressReport(ByProgressBar: 1);
+            var progress = new Progress(worker, progressReport, update.FileCount, 1);
+            using (var dataPatcher = new DataPatcher())
+                dataPatcher.Patch(data, update, progress.PerformStep);
+
+            data.Sah.Write(data.Sah.Path);
+            File.Delete("update.sah");
+            File.Delete("update.saf");
         }
 
         /// <summary>
         /// Downloads a new updater, starts a client process, passing "new updater" as the 
         /// command-line argument, and terminates the current process.
         /// 
-        /// Expect the client to rename the new updater, delete the old updater and create 
+        /// Expect the client to delete the old updater, rename the new updater and create 
         /// an updater process.
         /// </summary>
         /// <param name="httpClient"></param>
         private static void UpdaterPatcher(HttpClient httpClient)
         {
-            try
-            {
-                var newUpdater = new NewUpdater();
-                httpClient.DownloadFile(newUpdater.Url, newUpdater.Path);
+            var newUpdater = new NewUpdater();
+            httpClient.DownloadFile(newUpdater.Url, newUpdater.Path);
 
-                if (!File.Exists(newUpdater.Path))
-                    return;
+            if (!File.Exists(newUpdater.Path))
+                return;
 
-                var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
-                Process.Start(fileName, "new updater");
-                Kernel32.TerminateProcess(Kernel32.GetCurrentProcess(), 0);
-            }
-            catch (Exception ex)
-            {
-                var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
+            Process.Start(fileName, "new updater");
+            Kernel32.TerminateProcess(Kernel32.GetCurrentProcess(), 0);
         }
     }
 }
