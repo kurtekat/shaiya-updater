@@ -17,11 +17,11 @@ namespace Updater.Core
         /// Initializes a new instance of the <see cref="Patch"/> class with the <paramref name="version"/> parameter.
         /// </summary>
         /// <param name="version">The patch version number.</param>
-        /// <exception cref="ArgumentOutOfRangeException">The specified version is less than 1 or greater than 9999.</exception>
+        /// <exception cref="ArgumentException">The specified version is less than 2 or greater than 9999.</exception>
         public Patch(uint version)
         {
-            if (version < 1 || version > 9999)
-                throw new ArgumentOutOfRangeException(nameof(version), version, null);
+            if (version < 2 || version > 9999)
+                throw new ArgumentException(null, nameof(version));
 
             // e.g., ps0002.patch
             FileName = $"ps{version:D4}.patch";
