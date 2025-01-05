@@ -136,9 +136,6 @@
     <value>Actualizando</value>
   </data>
   <data name="ProgressMessage7" xml:space="preserve">
-    <value>Error de actualización</value>
-  </data>
-  <data name="ProgressMessage8" xml:space="preserve">
     <value>Actualización completada</value>
   </data>
   <data name="Message1" xml:space="preserve">

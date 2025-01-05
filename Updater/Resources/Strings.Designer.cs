@@ -133,20 +133,11 @@ namespace Updater.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update error.
+        ///   Looks up a localized string similar to Update completed.
         /// </summary>
         internal static string ProgressMessage7 {
             get {
                 return ResourceManager.GetString("ProgressMessage7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update completed.
-        /// </summary>
-        internal static string ProgressMessage8 {
-            get {
-                return ResourceManager.GetString("ProgressMessage8", resourceCulture);
             }
         }
     }
