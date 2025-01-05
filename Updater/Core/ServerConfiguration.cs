@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using Updater.Common;
+using Updater.Helpers;
 using Updater.Imports;
 
 namespace Updater.Core
@@ -15,11 +16,15 @@ namespace Updater.Core
         public uint PatchFileVersion { get; } = 2;
         public uint UpdaterVersion { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerConfiguration"/> class with the <paramref name="httpClient"/> parameter.
+        /// </summary>
+        /// <param name="httpClient"></param>
         public ServerConfiguration(HttpClient httpClient)
         {
             var requestUri = $"{Constants.Source}/shaiya/{FileName}";
             var path = Path.Combine(Directory.GetCurrentDirectory(), FileName);
-            Util.DownloadToFile(httpClient, requestUri, path);
+            httpClient.DownloadFile(requestUri, path);
 
             if (File.Exists(path))
             {
