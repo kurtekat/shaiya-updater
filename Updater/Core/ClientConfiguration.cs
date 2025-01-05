@@ -15,6 +15,9 @@ namespace Updater.Core
         public uint CurrentVersion { get; set; } = 1;
         public string StartUpdate { get; } = string.Empty;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClientConfiguration"/> class.
+        /// </summary>
         public ClientConfiguration()
         {
             Path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName);
