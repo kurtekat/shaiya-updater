@@ -6,6 +6,7 @@ using System.Windows;
 using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Core;
+using Updater.Helpers;
 using Updater.Imports;
 using Updater.Resources;
 
@@ -41,9 +42,9 @@ namespace Updater
                         worker.ReportProgress(0, new ProgressReport(progressMessage));
 
                         var patch = new Patch(clientConfiguration.CurrentVersion + 1);
-                        Util.DownloadToFile(httpClient, patch.Url, patch.Path);
+                        httpClient.DownloadFile(patch.Url, patch.Path);
 
-                        if (!File.Exists(patch.Path))
+                        if (!patch.Exists())
                         {
                             worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage3));
                             break;
@@ -52,23 +53,19 @@ namespace Updater
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientConfiguration.Path);
 
-                        if (Util.ExtractZipFile(patch.Path, Directory.GetCurrentDirectory()) != 0)
+                        if (!patch.ExtractToCurrentDirectory())
                         {
                             worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage5));
                             break;
                         }
 
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientConfiguration.Path);
-                        File.Delete(patch.Path);
+                        patch.Delete();
 
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage6));
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientConfiguration.Path);
 
-                        if (DataPatcher(worker) != 0)
-                        {
-                            worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage7));
-                            break;
-                        }
+                        DataPatcher(worker);
 
                         Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_END", clientConfiguration.Path);
 
@@ -77,7 +74,7 @@ namespace Updater
 
                         var percentProgress = ((double)clientConfiguration.CurrentVersion / serverConfiguration.PatchFileVersion) * 100;
                         if (percentProgress != 0)
-                            worker.ReportProgress((int)percentProgress, new ProgressReport(Strings.ProgressMessage8, 2));
+                            worker.ReportProgress((int)percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
 
                         var currentVersion = clientConfiguration.CurrentVersion.ToString();
                         Kernel32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientConfiguration.Path);
@@ -91,7 +88,7 @@ namespace Updater
             }
         }
 
-        private static int DataPatcher(BackgroundWorker worker)
+        private static void DataPatcher(BackgroundWorker worker)
         {
             try
             {
@@ -111,16 +108,13 @@ namespace Updater
                     dataPatcher.Patch(data, update, progress.PerformStep);
 
                 data.Sah.Write(data.Sah.Path);
-
                 File.Delete("update.sah");
                 File.Delete("update.saf");
-                return 0;
             }
             catch (Exception ex)
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
                 MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
-                return -1;
             }
         }
 
@@ -132,13 +126,12 @@ namespace Updater
         /// an updater process.
         /// </summary>
         /// <param name="httpClient"></param>
-        /// <returns>Zero on failure. Otherwise, nonzero.</returns>
         private static void UpdaterPatcher(HttpClient httpClient)
         {
             try
             {
                 var newUpdater = new NewUpdater();
-                Util.DownloadToFile(httpClient, newUpdater.Url, newUpdater.Path);
+                httpClient.DownloadFile(newUpdater.Url, newUpdater.Path);
 
                 if (!File.Exists(newUpdater.Path))
                     return;
