@@ -7,42 +7,25 @@ namespace Updater.Tests.Core
     {
         private const string PatchFileName = "ps0002.patch";
         private const uint PatchFileVersion = 2;
-        private Patch _patch;
 
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void ConstructorTest()
         {
-            _patch = new Patch(PatchFileVersion);
+            var patch = new Patch(PatchFileVersion);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(patch.Path, Does.EndWith(PatchFileName));
+                Assert.That(patch.Url, Does.EndWith(PatchFileName));
+                Assert.That(Uri.IsWellFormedUriString(patch.Url, UriKind.Absolute), Is.True);
+            });
         }
 
         [Test]
-        public void FileNameShouldBeEqualToPatchFileName()
+        public void ShouldThrowArgumentException()
         {
-            Assert.That(_patch.FileName, Is.EqualTo(PatchFileName));
-        }
-
-        [Test]
-        public void PathShouldEndWithPatchFileName()
-        {
-            Assert.That(_patch.Path, Does.EndWith(PatchFileName));
-        }
-
-        [Test]
-        public void ShouldThrowArgumentOutOfRangeException()
-        {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new Patch(10000));
-        }
-
-        [Test]
-        public void UrlShouldEndWithPatchFileName()
-        {
-            Assert.That(_patch.Url, Does.EndWith(PatchFileName));
-        }
-
-        [Test]
-        public void UrlShouldBeWellFormedUriString()
-        {
-            Assert.That(Uri.IsWellFormedUriString(_patch.Url, UriKind.Absolute), Is.True);
+            Assert.Throws<ArgumentException>(() => new Patch(1));
+            Assert.Throws<ArgumentException>(() => new Patch(10000));
         }
     }
 }

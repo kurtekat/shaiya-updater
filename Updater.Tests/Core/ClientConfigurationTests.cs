@@ -5,42 +5,25 @@ namespace Updater.Tests.Core
     [TestFixture]
     public class ClientConfigurationTests
     {
-        private ClientConfiguration _config;
-
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void ConstructorTest()
         {
-            _config = new ClientConfiguration();
+            var configuration = new ClientConfiguration();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(configuration.CurrentVersion, Is.Not.Zero);
+                Assert.That(configuration.Path, Does.EndWith(ClientConfiguration.FileName));
+            });
+
+            Assume.That(configuration.CheckVersion, Is.Zero);
+            Assume.That(configuration.StartUpdate, Is.Empty);
         }
 
         [Test]
-        public void CheckVersionShouldBeZero()
-        {
-            Assume.That(_config.CheckVersion, Is.Zero);
-        }
-
-        [Test]
-        public void CurrentVersionShouldNotBeZero()
-        {
-            Assert.That(_config.CurrentVersion, Is.Not.Zero);
-        }
-
-        [Test]
-        public void FileNameShouldNotBeEmpty()
+        public void FileNameIsNotEmpty()
         {
             Assert.That(ClientConfiguration.FileName, Is.Not.Empty);
-        }
-
-        [Test]
-        public void PathShouldEndWithFileName()
-        {
-            Assert.That(_config.Path, Does.EndWith(ClientConfiguration.FileName));
-        }
-
-        [Test]
-        public void StartUpdateShouldBeEmpty()
-        {
-            Assume.That(_config.StartUpdate, Is.Empty);
         }
     }
 }

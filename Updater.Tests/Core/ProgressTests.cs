@@ -7,13 +7,11 @@ namespace Updater.Tests.Core
     public class ProgressTests
     {
         private BackgroundWorker _backgroundWorker;
-        private ProgressReport _progressReport;
 
         [SetUp]
         public void SetUp()
         {
             _backgroundWorker = new BackgroundWorker();
-            _progressReport = new ProgressReport();
         }
 
         [TearDown]
@@ -23,7 +21,36 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void ValueShouldBeEqualToMaximum()
+        public void ConstructorTest()
+        {
+            var progress = new Progress(_backgroundWorker, null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(progress.Maximum, Is.Not.Zero);
+                Assert.That(progress.Step, Is.Not.Zero);
+                Assert.That(progress.Value, Is.Zero);
+            });
+        }
+
+        [Test]
+        public void IncrementTest()
+        {
+            int maximum = 10;
+            int value = 1;
+            var progress = new Progress(_backgroundWorker, null, maximum);
+
+            for (int i = 0; i < progress.Maximum; i++)
+                progress.Increment(value);
+
+            Assert.That(progress.Value, Is.EqualTo(progress.Maximum));
+
+            progress.Increment(value);
+            Assert.That(progress.Value, Is.Not.GreaterThan(progress.Maximum));
+        }
+
+        [Test]
+        public void PerformStepTest()
         {
             int maximum = 10;
             int step = 1;
@@ -33,16 +60,8 @@ namespace Updater.Tests.Core
                 progress.PerformStep();
 
             Assert.That(progress.Value, Is.EqualTo(progress.Maximum));
-        }
 
-        [Test]
-        public void ValueShouldNotBeGreaterThanMaximum()
-        {
-            int maximum = 100;
-            int value = 101;
-            var progress = new Progress(_backgroundWorker, null, maximum);
-
-            progress.Increment(value);
+            progress.PerformStep();
             Assert.That(progress.Value, Is.Not.GreaterThan(progress.Maximum));
         }
     }

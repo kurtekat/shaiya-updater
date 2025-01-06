@@ -5,24 +5,16 @@ namespace Updater.Tests.Common
     [TestFixture]
     public class ProgressReportTests
     {
-        private ProgressReport _progressReport;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _progressReport = new ProgressReport();
-        }
-
         [Test]
-        public void MessageShouldBeEmpty()
+        public void ConstructorTest()
         {
-            Assert.That(_progressReport.Message, Is.Empty);
-        }
+            var progressReport = new ProgressReport();
 
-        [Test]
-        public void ProgressBarShouldBeZero()
-        {
-            Assert.That(_progressReport.ByProgressBar, Is.Zero);
+            Assert.Multiple(() =>
+            {
+                Assert.That(progressReport.Message, Is.Empty);
+                Assert.That(progressReport.ByProgressBar, Is.Zero);
+            });
         }
     }
 }

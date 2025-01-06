@@ -6,13 +6,11 @@ namespace Updater.Tests.Core
     public class ServerConfigurationTests
     {
         private HttpClient _httpClient;
-        private ServerConfiguration _config;
 
         [SetUp]
         public void SetUp()
         {
             _httpClient = new HttpClient();
-            _config = new ServerConfiguration(_httpClient);
         }
 
         [TearDown]
@@ -22,27 +20,23 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void CheckVersionShouldBeZero()
+        public void ConstructorTest()
         {
-            Assume.That(_config.CheckVersion, Is.Zero);
+            var configuration = new ServerConfiguration(_httpClient);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(configuration.PatchFileVersion, Is.Not.Zero);
+                Assert.That(configuration.UpdaterVersion, Is.Not.Zero);
+            });
+
+            Assume.That(configuration.CheckVersion, Is.Zero);
         }
 
         [Test]
-        public void FileNameShouldNotBeEmpty()
+        public void FileNameIsNotEmpty()
         {
             Assert.That(ServerConfiguration.FileName, Is.Not.Empty);
-        }
-
-        [Test]
-        public void PatchFileVersionShouldNotBeZero()
-        {
-            Assert.That(_config.PatchFileVersion, Is.Not.Zero);
-        }
-
-        [Test]
-        public void UpdateVersionShouldNotBeZero()
-        {
-            Assert.That(_config.UpdaterVersion, Is.Not.Zero);
         }
     }
 }

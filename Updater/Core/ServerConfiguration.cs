@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 using Updater.Common;
-using Updater.Helpers;
+using Updater.Extensions;
 using Updater.Imports;
 
 namespace Updater.Core
