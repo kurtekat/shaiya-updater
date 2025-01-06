@@ -6,7 +6,7 @@ using System.Windows;
 using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Core;
-using Updater.Helpers;
+using Updater.Extensions;
 using Updater.Imports;
 using Updater.Resources;
 

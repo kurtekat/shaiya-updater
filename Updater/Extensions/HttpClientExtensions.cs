@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Net.Http;
 
-namespace Updater.Helpers
+namespace Updater.Extensions
 {
-    public static class HttpClientHelper
+    public static class HttpClientExtensions
     {
         /// <summary>
         /// Downloads the resource with the specified URI to a local file.
