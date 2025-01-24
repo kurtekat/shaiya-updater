@@ -1,6 +1,6 @@
 ﻿using Updater.Core;
 
-namespace Updater.Tests.Common
+namespace Updater.Tests.Core
 {
     [TestFixture]
     public class ProgressReportTests
