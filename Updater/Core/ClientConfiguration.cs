@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Updater.Common;
+using Updater.Helpers;
 using Updater.Imports;
 
 namespace Updater.Core
@@ -23,7 +23,7 @@ namespace Updater.Core
             Path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName);
             CheckVersion = Kernel32.GetPrivateProfileIntW("Version", "CheckVersion", 0, Path);
             CurrentVersion = Kernel32.GetPrivateProfileIntW("Version", "CurrentVersion", 1, Path);
-            StartUpdate = Util.GetPrivateProfileString("Version", "StartUpdate", "", Path);
+            StartUpdate = IniHelper.GetPrivateProfileString("Version", "StartUpdate", "", Path);
         }
     }
 }

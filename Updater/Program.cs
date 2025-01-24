@@ -7,6 +7,7 @@ using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Core;
 using Updater.Extensions;
+using Updater.Helpers;
 using Updater.Imports;
 using Updater.Resources;
 
@@ -51,7 +52,7 @@ namespace Updater
                         }
 
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_START", clientConfiguration.Path);
+                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "EXTRACT_START", clientConfiguration.Path);
 
                         // Issue: antivirus software could be scanning a file from a previous patch
                         // when this method tries to overwrite it.
@@ -61,15 +62,15 @@ namespace Updater
                             break;
                         }
 
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "EXTRACT_END", clientConfiguration.Path);
+                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "EXTRACT_END", clientConfiguration.Path);
                         patch.Delete();
 
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage6));
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_START", clientConfiguration.Path);
+                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "UPDATE_START", clientConfiguration.Path);
 
                         DataPatcher(worker);
 
-                        Kernel32.WritePrivateProfileStringW("Version", "StartUpdate", "UPDATE_END", clientConfiguration.Path);
+                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "UPDATE_END", clientConfiguration.Path);
 
                         ++clientConfiguration.CurrentVersion;
                         ++progressValue;
@@ -79,7 +80,7 @@ namespace Updater
                             worker.ReportProgress((int)percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
 
                         var currentVersion = clientConfiguration.CurrentVersion.ToString();
-                        Kernel32.WritePrivateProfileStringW("Version", "CurrentVersion", currentVersion, clientConfiguration.Path);
+                        IniHelper.WritePrivateProfileString("Version", "CurrentVersion", currentVersion, clientConfiguration.Path);
                     }
                 }
             }

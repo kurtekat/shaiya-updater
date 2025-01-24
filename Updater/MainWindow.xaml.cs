@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Updater.Common;
 using Updater.Core;
+using Updater.Helpers;
 using Updater.Imports;
 using Updater.Resources;
 
@@ -21,7 +22,6 @@ namespace Updater
     {
         private static readonly BackgroundWorker _backgroundWorker1 = new();
         private static HttpClient _httpClient = new();
-        private static readonly Image _icon3 = new();
         private static readonly Image _image167 = new();
         private static readonly Image _image168 = new();
         private static readonly Image _image169 = new();
@@ -77,8 +77,7 @@ namespace Updater
 
         private void Window1_Initialized(object sender, EventArgs e)
         {
-            var windowName = Application.Current.MainWindow.Title;
-            if (User32.FindWindowW(null, windowName) != IntPtr.Zero)
+            if (User32.FindWindowW(null, Application.Current.MainWindow.Title) != IntPtr.Zero)
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
                 MessageBox.Show(Strings.Message1, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -92,15 +91,7 @@ namespace Updater
                 Application.Current.Shutdown(0);
             }
 
-            var icon3 = Util.BitmapImageFromManifestResource("Updater.Resources.Icon.Icon3.ico");
-            if (icon3 is not null)
-            {
-                _icon3.Width = icon3.PixelWidth;
-                _icon3.Height = icon3.PixelHeight;
-                _icon3.Source = icon3;
-            }
-
-            var image167 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap167.bmp");
+            var image167 = BitmapImageHelper.FromManifestResource("Bitmap167.bmp");
             if (image167 is not null)
             {
                 _image167.Width = image167.PixelWidth;
@@ -108,7 +99,7 @@ namespace Updater
                 _image167.Source = image167;
             }
 
-            var image168 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap168.bmp");
+            var image168 = BitmapImageHelper.FromManifestResource("Bitmap168.bmp");
             if (image168 is not null)
             {
                 _image168.Width = image168.PixelWidth;
@@ -116,7 +107,7 @@ namespace Updater
                 _image168.Source = image168;
             }
 
-            var image169 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap169.bmp");
+            var image169 = BitmapImageHelper.FromManifestResource("Bitmap169.bmp");
             if (image169 is not null)
             {
                 _image169.Width = image169.PixelWidth;
@@ -124,7 +115,7 @@ namespace Updater
                 _image169.Source = image169;
             }
 
-            var image170 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap170.bmp");
+            var image170 = BitmapImageHelper.FromManifestResource("Bitmap170.bmp");
             if (image170 is not null)
             {
                 _image170.Width = image170.PixelWidth;
@@ -132,7 +123,7 @@ namespace Updater
                 _image170.Source = image170;
             }
 
-            var image185 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap185.bmp");
+            var image185 = BitmapImageHelper.FromManifestResource("Bitmap185.bmp");
             if (image185 is not null)
             {
                 _image185.Width = image185.PixelWidth;
@@ -140,7 +131,7 @@ namespace Updater
                 _image185.Source = image185;
             }
 
-            var image187 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap187.bmp");
+            var image187 = BitmapImageHelper.FromManifestResource("Bitmap187.bmp");
             if (image187 is not null)
             {
                 _image187.Width = image187.PixelWidth;
@@ -148,7 +139,7 @@ namespace Updater
                 _image187.Source = image187;
             }
 
-            var image188 = Util.BitmapImageFromManifestResource("Updater.Resources.Bitmap.Bitmap188.bmp");
+            var image188 = BitmapImageHelper.FromManifestResource("Bitmap188.bmp");
             if (image188 is not null)
             {
                 _image188.Width = image188.PixelWidth;
@@ -160,7 +151,6 @@ namespace Updater
         private void Window1_Loaded(object sender, RoutedEventArgs e)
         {
             _window1.Background = new ImageBrush(_image167.Source);
-            _window1.Icon = _icon3.Source;
             _button1.Content = _image185;
             _button2.Content = _image168;
             _webBrowser1.Navigate(Constants.WebBrowserSource);
