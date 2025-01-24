@@ -15,10 +15,10 @@
     <Authors>$(AssemblyName)</Authors>
     <Description></Description>
     <RepositoryType>git</RepositoryType>
-    <ApplicationIcon>Resources\Icon\Icon3.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icon\IconGroup164.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.1.12.0</AssemblyVersion>
-    <FileVersion>1.1.12.0</FileVersion>
+    <AssemblyVersion>1.1.13.0</AssemblyVersion>
+    <FileVersion>1.1.13.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,12 +29,10 @@
     <None Remove="Resources\Bitmap\Bitmap185.bmp" />
     <None Remove="Resources\Bitmap\Bitmap187.bmp" />
     <None Remove="Resources\Bitmap\Bitmap188.bmp" />
-    <None Remove="Resources\Icon\Icon3.ico" />
-    <None Remove="Resources\Icon\Icon9.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\Icon\Icon3.ico" />
+    <Content Include="Resources\Icon\IconGroup164.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +43,6 @@
     <EmbeddedResource Include="Resources\Bitmap\Bitmap185.bmp" />
     <EmbeddedResource Include="Resources\Bitmap\Bitmap187.bmp" />
     <EmbeddedResource Include="Resources\Bitmap\Bitmap188.bmp" />
-    <EmbeddedResource Include="Resources\Icon\Icon3.ico" />
   </ItemGroup>
 
   <ItemGroup>
