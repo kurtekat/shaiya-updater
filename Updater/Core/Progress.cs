@@ -89,8 +89,8 @@ namespace Updater.Core
             Value += value;
             Value = Value > Maximum ? Maximum : Value;
 
-            var percentProgress = (double)(Value / Maximum) * 100;
-            _backgroundWorker.ReportProgress((int)percentProgress, _userState);
+            var percentProgress = (int)((double)Value / Maximum * 100);
+            _backgroundWorker.ReportProgress(percentProgress, _userState);
         }
 
         /// <summary>
@@ -102,8 +102,8 @@ namespace Updater.Core
             Value += Step;
             Value = Value > Maximum ? Maximum : Value;
 
-            var percentProgress = (double)(Value / Maximum) * 100;
-            _backgroundWorker.ReportProgress((int)percentProgress, _userState);
+            var percentProgress = (int)((double)Value / Maximum * 100);
+            _backgroundWorker.ReportProgress(percentProgress, _userState);
         }
     }
 }
