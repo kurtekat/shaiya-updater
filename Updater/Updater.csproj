@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Copyright>Copyright (c) 2024 shaiya.dev</Copyright>
+    <Copyright>Copyright (c) 2025 shaiya.dev</Copyright>
     <Title>Shaiya Updater</Title>
     <Company>shaiya.dev</Company>
     <Product>Shaiya Updater</Product>
@@ -17,8 +17,8 @@
     <RepositoryType>git</RepositoryType>
     <ApplicationIcon>Resources\Icon\IconGroup164.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>1.1.14.0</AssemblyVersion>
-    <FileVersion>1.1.14.0</FileVersion>
+    <AssemblyVersion>1.1.15.0</AssemblyVersion>
+    <FileVersion>1.1.15.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
