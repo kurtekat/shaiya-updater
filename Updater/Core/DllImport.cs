@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Updater.Imports
+namespace Updater.Core
 {
-    static class Kernel32
+    static class DllImport
     {
         [DllImport("Kernel32", EntryPoint = "GetCurrentProcess")]
         public static extern IntPtr GetCurrentProcess();
@@ -15,8 +15,11 @@ namespace Updater.Imports
 
         [DllImport("Kernel32", EntryPoint = "TerminateProcess")]
         public static extern int TerminateProcess(IntPtr handle, int exitCode);
-        
+
         [DllImport("Kernel32", EntryPoint = "WritePrivateProfileStringW", CharSet = CharSet.Unicode)]
         public static extern int WritePrivateProfileStringW(string section, string? key, string? value, string fileName);
+
+        [DllImport("User32", EntryPoint = "FindWindowW", CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindWindowW(string? className, string? windowName);
     }
 }

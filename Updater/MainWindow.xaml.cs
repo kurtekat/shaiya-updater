@@ -10,7 +10,6 @@ using System.Windows.Media;
 using Updater.Common;
 using Updater.Core;
 using Updater.Helpers;
-using Updater.Imports;
 using Updater.Resources;
 
 namespace Updater
@@ -77,14 +76,14 @@ namespace Updater
 
         private void Window1_Initialized(object sender, EventArgs e)
         {
-            if (User32.FindWindowW(null, Application.Current.MainWindow.Title) != IntPtr.Zero)
+            if (DllImport.FindWindowW(null, Application.Current.MainWindow.Title) != IntPtr.Zero)
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
                 MessageBox.Show(Strings.Message1, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
-            if (User32.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
+            if (DllImport.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
                 MessageBox.Show(Strings.Message2, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -199,7 +198,7 @@ namespace Updater
             {
                 var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
                 Process.Start(fileName, "start game");
-                Kernel32.TerminateProcess(Kernel32.GetCurrentProcess(), 0);
+                _ = DllImport.TerminateProcess(DllImport.GetCurrentProcess(), 0);
             }
             catch (Exception ex)
             {

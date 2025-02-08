@@ -1,4 +1,4 @@
-﻿using Updater.Imports;
+﻿using Updater.Core;
 
 namespace Updater.Helpers
 {
@@ -16,7 +16,7 @@ namespace Updater.Helpers
         public static string GetPrivateProfileString(string? section, string? key, string? defaultValue, string fileName)
         {
             var buffer = new char[short.MaxValue];
-            var length = Kernel32.GetPrivateProfileStringW(section, key, defaultValue, buffer, (uint)buffer.Length, fileName);
+            var length = DllImport.GetPrivateProfileStringW(section, key, defaultValue, buffer, (uint)buffer.Length, fileName);
             return new string(buffer, 0, (int)length);
         }
 
@@ -34,7 +34,7 @@ namespace Updater.Helpers
             if (value is not null)
                 value += '\0';
 
-            return Kernel32.WritePrivateProfileStringW(section, key, value, fileName);
+            return DllImport.WritePrivateProfileStringW(section, key, value, fileName);
         }
     }
 }

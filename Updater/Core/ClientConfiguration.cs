@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Updater.Helpers;
-using Updater.Imports;
 
 namespace Updater.Core
 {
@@ -21,8 +20,8 @@ namespace Updater.Core
         public ClientConfiguration()
         {
             Path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), FileName);
-            CheckVersion = Kernel32.GetPrivateProfileIntW("Version", "CheckVersion", 0, Path);
-            CurrentVersion = Kernel32.GetPrivateProfileIntW("Version", "CurrentVersion", 1, Path);
+            CheckVersion = DllImport.GetPrivateProfileIntW("Version", "CheckVersion", 0, Path);
+            CurrentVersion = DllImport.GetPrivateProfileIntW("Version", "CurrentVersion", 1, Path);
             StartUpdate = IniHelper.GetPrivateProfileString("Version", "StartUpdate", "", Path);
         }
     }
