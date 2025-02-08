@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Updater.Helpers;
 
 namespace Updater.Core
 {
@@ -89,7 +90,7 @@ namespace Updater.Core
             Value += value;
             Value = Value > Maximum ? Maximum : Value;
 
-            var percentProgress = (int)((double)Value / Maximum * 100);
+            var percentProgress = MathHelper.Percentage(Value, Maximum);
             _backgroundWorker.ReportProgress(percentProgress, _userState);
         }
 
@@ -102,7 +103,7 @@ namespace Updater.Core
             Value += Step;
             Value = Value > Maximum ? Maximum : Value;
 
-            var percentProgress = (int)((double)Value / Maximum * 100);
+            var percentProgress = MathHelper.Percentage(Value, Maximum);
             _backgroundWorker.ReportProgress(percentProgress, _userState);
         }
     }
