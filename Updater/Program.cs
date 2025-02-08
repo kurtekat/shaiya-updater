@@ -8,7 +8,6 @@ using Updater.Common;
 using Updater.Core;
 using Updater.Extensions;
 using Updater.Helpers;
-using Updater.Imports;
 using Updater.Resources;
 
 namespace Updater
@@ -75,9 +74,9 @@ namespace Updater
                         ++clientConfiguration.CurrentVersion;
                         ++progressValue;
 
-                        var percentProgress = ((double)clientConfiguration.CurrentVersion / serverConfiguration.PatchFileVersion) * 100;
+                        var percentProgress = MathHelper.Percentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
                         if (percentProgress != 0)
-                            worker.ReportProgress((int)percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
+                            worker.ReportProgress(percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
 
                         var currentVersion = clientConfiguration.CurrentVersion.ToString();
                         IniHelper.WritePrivateProfileString("Version", "CurrentVersion", currentVersion, clientConfiguration.Path);
@@ -87,7 +86,7 @@ namespace Updater
             catch (Exception ex)
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -131,7 +130,7 @@ namespace Updater
 
             var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
             Process.Start(fileName, "new updater");
-            Kernel32.TerminateProcess(Kernel32.GetCurrentProcess(), 0);
+            _ = DllImport.TerminateProcess(DllImport.GetCurrentProcess(), 0);
         }
     }
 }
