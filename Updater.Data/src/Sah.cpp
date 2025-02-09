@@ -69,7 +69,7 @@ void Sah::read()
 
                 auto file = std::make_shared<SFile>(fileName, currentFolder);
                 file->offset = binaryReader.readInt64();
-                file->length = binaryReader.readUInt32();
+                file->length = binaryReader.readInt32();
                 file->timestamp = binaryReader.readInt32();
 
                 currentFolder->files.insert({ file->name, file });
