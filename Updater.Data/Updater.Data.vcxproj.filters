@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Sah.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SBinaryReader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SBinaryWriter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Saf.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Data.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SFile.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Saf.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Sah.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SBinaryReader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SBinaryWriter.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PathHelper.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Convert.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SFolder.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Windows;
-using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Core;
 using Updater.Extensions;
@@ -92,24 +91,29 @@ namespace Updater
 
         private static void DataPatcher(BackgroundWorker worker)
         {
-            var data = new Data("data.sah", "data.saf");
-            var update = new Data("update.sah", "update.saf");
-
             if (File.Exists("delete.lst"))
             {
-                data.RemoveFilesFromLst("delete.lst");
-                data.Sah.Write(data.Sah.Path);
-                File.Delete("delete.lst");
+                var paths = File.ReadAllLines("delete.lst");
+                if (paths.Length > 0)
+                {
+                    var progressReport = new ProgressReport(ByProgressBar: 1);
+                    var progress = new Progress(worker, progressReport, paths.Length, 1);
+                    DllImport.RemoveFiles(progress.PerformStep);
+                }
             }
 
-            var progressReport = new ProgressReport(ByProgressBar: 1);
-            var progress = new Progress(worker, progressReport, update.FileCount, 1);
-            using (var dataPatcher = new DataPatcher())
-                dataPatcher.Patch(data, update, progress.PerformStep);
+            if (File.Exists("update.sah") && File.Exists("update.saf"))
+            {
+                var binaryReader = new BinaryReader(File.OpenRead("update.sah"));
+                binaryReader.BaseStream.Seek(7, SeekOrigin.Begin);
 
-            data.Sah.Write(data.Sah.Path);
-            File.Delete("update.sah");
-            File.Delete("update.saf");
+                var fileCount = binaryReader.ReadInt32();
+                binaryReader.Close();
+
+                var progressReport = new ProgressReport(ByProgressBar: 1);
+                var progress = new Progress(worker, progressReport, fileCount, 1);
+                DllImport.DataPatcher(progress.PerformStep);
+            }
         }
 
         /// <summary>

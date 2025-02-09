@@ -1,0 +1,4 @@
+LIBRARY   Updater.Interop.DLL
+EXPORTS
+   DataPatcher   @1
+   RemoveFiles   @2
