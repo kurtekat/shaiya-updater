@@ -12,7 +12,11 @@ Windows Presentation Foundation (WPF)
 
 ## Prerequisites
 
+[Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x86.exe)
+
 [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+
+[.NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
 
 ## Dependencies
 
