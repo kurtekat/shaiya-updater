@@ -26,6 +26,10 @@
   <ItemGroup>
     <ClInclude Include="include\Function.h" />
     <ClInclude Include="include\Native.h" />
+    <ClInclude Include="resources\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

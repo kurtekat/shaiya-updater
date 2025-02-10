@@ -7,6 +7,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{a4a039e2-e4ef-4f5e-8e91-5f2a99657e6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{3b023c03-3324-433b-9b1b-739683f505f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Function.cpp">
@@ -26,5 +29,13 @@
     <ClInclude Include="include\Function.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="resources\resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\Resource.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
