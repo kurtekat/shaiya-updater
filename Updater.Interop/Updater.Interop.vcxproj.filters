@@ -1,10 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Native.cpp" />
-    <ClCompile Include="Function.cpp" />
+    <Filter Include="include">
+      <UniqueIdentifier>{ac5179d0-3f87-4a97-82a0-bae105e920d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{a4a039e2-e4ef-4f5e-8e91-5f2a99657e6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Native.h" />
+    <ClCompile Include="src\Function.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Native.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AssemblyInfo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Native.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Function.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
