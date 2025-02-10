@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Updater.Interop\Updater.Interop.vcxproj" />
     <ProjectReference Include="..\Updater\Updater.csproj" />
   </ItemGroup>
 

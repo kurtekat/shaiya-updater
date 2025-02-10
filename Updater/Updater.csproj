@@ -17,8 +17,8 @@
     <RepositoryType>git</RepositoryType>
     <ApplicationIcon>Resources\Icon\IconGroup164.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <FileVersion>2.1.0.0</FileVersion>
     <Platforms>x86;x64</Platforms>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
@@ -68,6 +68,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Updater.Interop\Updater.Interop.vcxproj">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Resources\strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -81,10 +87,5 @@
       <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  
-  <Target Name="CopyFilesToOutput" AfterTargets="Publish">
-    <Copy SourceFiles="bin\$(Platform)\$(Configuration)\$(TargetFramework)\Updater.Interop.dll" DestinationFolder="$(PublishDir)" />
-    <Copy SourceFiles="bin\$(Platform)\$(Configuration)\$(TargetFramework)\Updater.Interop.pdb" DestinationFolder="$(PublishDir)" />
-  </Target>
 
 </Project>

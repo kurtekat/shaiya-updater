@@ -7,6 +7,7 @@ using Updater.Common;
 using Updater.Core;
 using Updater.Extensions;
 using Updater.Helpers;
+using Updater.Interop;
 using Updater.Resources;
 
 namespace Updater
@@ -98,7 +99,7 @@ namespace Updater
                 {
                     var progressReport = new ProgressReport(ByProgressBar: 1);
                     var progress = new Progress(worker, progressReport, paths.Length, 1);
-                    DllImport.RemoveFiles(progress.PerformStep);
+                    Function.RemoveFiles(progress.PerformStep);
                 }
             }
 
@@ -112,7 +113,7 @@ namespace Updater
 
                 var progressReport = new ProgressReport(ByProgressBar: 1);
                 var progress = new Progress(worker, progressReport, fileCount, 1);
-                DllImport.DataPatcher(progress.PerformStep);
+                Function.DataPatcher(progress.PerformStep);
             }
         }
 

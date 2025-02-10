@@ -11,10 +11,10 @@
 #include <Updater.Data/include/Sah.h>
 #include <Updater.Data/include/SFile.h>
 #include <Updater.Data/include/SFolder.h>
+#include "Native.h"
 using namespace Updater::Data;
 
-extern __declspec(dllexport) 
-void __cdecl DataPatcher(void(*progressCallback)())
+void Native_DataPatcher(void(*progressCallback)())
 {
     auto target = std::make_unique<Data>("data.sah", "data.saf");
     target->sah->read();
@@ -81,8 +81,7 @@ void __cdecl DataPatcher(void(*progressCallback)())
     std::remove("update.saf");
 }
 
-extern __declspec(dllexport) 
-void __cdecl RemoveFiles(void(*progressCallback)())
+void Native_RemoveFiles(void(*progressCallback)())
 {
     auto data = std::make_unique<Data>("data.sah", "data.saf");
     data->sah->read();

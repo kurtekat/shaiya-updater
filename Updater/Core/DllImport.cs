@@ -21,11 +21,5 @@ namespace Updater.Core
 
         [DllImport("User32", EntryPoint = "FindWindowW", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindowW(string? className, string? windowName);
-
-        [DllImport("Updater.Interop", EntryPoint = "DataPatcher", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void DataPatcher(Action? progressCallback);
-
-        [DllImport("Updater.Interop", EntryPoint = "RemoveFiles", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void RemoveFiles(Action? progressCallback);
     }
 }
