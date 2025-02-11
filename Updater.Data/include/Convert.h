@@ -12,7 +12,7 @@ namespace Updater::Data
         /// Converts the specified size_t value to a 32-bit signed integer.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
+        /// <returns>A 32-bit signed integer that is equivalent to value.</returns>
         static int32_t toInt32(size_t value)
         {
             if (value > INT32_MAX)
@@ -25,7 +25,7 @@ namespace Updater::Data
         /// Converts the specified size_t value to a 32-bit unsigned integer.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
+        /// <returns>A 32-bit unsigned integer that is equivalent to value.</returns>
         static uint32_t toUInt32(size_t value)
         {
             if (value > UINT32_MAX)

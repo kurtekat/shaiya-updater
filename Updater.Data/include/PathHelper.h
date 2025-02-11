@@ -29,7 +29,7 @@ namespace Updater::Data
         /// </summary>
         /// <param name="lhs"></param>
         /// <param name="rhs"></param>
-        /// <returns></returns>
+        /// <returns>See std::filesystem::operator/ docs.</returns>
         static Path combine(const Path& lhs, const Path& rhs)
         {
             return lhs / rhs;
@@ -40,7 +40,7 @@ namespace Updater::Data
         /// </summary>
         /// <param name="lhs"></param>
         /// <param name="rhs"></param>
-        /// <returns></returns>
+        /// <returns>See std::string::compare docs.</returns>
         static int icompare(const Path& lhs, const Path& rhs)
         {
             auto a = lhs.wstring();
@@ -60,7 +60,7 @@ namespace Updater::Data
         /// Splits a path into components based on directory separators.
         /// </summary>
         /// <param name="path"></param>
-        /// <returns></returns>
+        /// <returns>A vector containing the components delimited by directory separators.</returns>
         static std::vector<Path> split(const Path& path)
         {
             std::vector<Path> parts;

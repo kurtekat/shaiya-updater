@@ -32,8 +32,23 @@ namespace Updater::Data
         {
         }
 
+        /// <summary>
+        /// Ensures each folder in the specified path exists. If the specified path already 
+        /// exists, the last folder is returned. Otherwise, each folder that does not exist 
+        /// is created, and then the last folder is returned.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         std::shared_ptr<SFolder> ensureFolderExists(const std::filesystem::path& path);
+
+        /// <summary>
+        /// 
+        /// </summary>
         void read();
+
+        /// <summary>
+        /// 
+        /// </summary>
         void write();
 
     public:
