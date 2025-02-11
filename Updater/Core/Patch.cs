@@ -7,7 +7,7 @@ namespace Updater.Core
     /// <summary>
     /// Represents a zip archive with a .patch extension.
     /// </summary>
-    public class Patch
+    public sealed class Patch
     {
         public readonly string FileName = string.Empty;
         public readonly string Path = string.Empty;
