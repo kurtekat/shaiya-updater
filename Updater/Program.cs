@@ -30,8 +30,8 @@ namespace Updater
 
                 if (serverConfiguration.PatchFileVersion > clientConfiguration.CurrentVersion)
                 {
-                    worker.ReportProgress(0, new ProgressReport(ByProgressBar: 1));
-                    worker.ReportProgress(0, new ProgressReport(ByProgressBar: 2));
+                    worker.ReportProgress(0, new ProgressReport(1));
+                    worker.ReportProgress(0, new ProgressReport(2));
 
                     uint progressMax = serverConfiguration.PatchFileVersion - clientConfiguration.CurrentVersion;
                     uint progressValue = 1;
@@ -102,7 +102,7 @@ namespace Updater
                 File.Delete("delete.lst");
             }
 
-            var progressReport = new ProgressReport(ByProgressBar: 1);
+            var progressReport = new ProgressReport(1);
             var progress = new Progress(worker, progressReport, update.FileCount, 1);
             using (var dataPatcher = new DataPatcher())
                 dataPatcher.Patch(data, update, progress.PerformStep);
