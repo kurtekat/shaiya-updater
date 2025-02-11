@@ -8,7 +8,7 @@ namespace Updater.Core
     /// <summary>
     /// Represents the server-side configuration file.
     /// </summary>
-    public class ServerConfiguration
+    public sealed class ServerConfiguration
     {
         public const string FileName = "UpdateVersion.ini";
         public uint CheckVersion { get; }

@@ -4,7 +4,7 @@ using namespace System::Runtime::InteropServices;
 
 namespace Updater::Interop
 {
-    public ref class Function
+    public ref class Function sealed
     {
     public:
 

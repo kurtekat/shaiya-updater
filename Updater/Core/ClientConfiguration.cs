@@ -6,7 +6,7 @@ namespace Updater.Core
     /// <summary>
     /// Represents the client-side configuration file.
     /// </summary>
-    public class ClientConfiguration
+    public sealed class ClientConfiguration
     {
         public const string FileName = "Version.ini";
         public readonly string Path = string.Empty;

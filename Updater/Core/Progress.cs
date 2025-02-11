@@ -6,7 +6,7 @@ namespace Updater.Core
     /// <summary>
     /// Represents the progress of a <see cref="BackgroundWorker"/> operation.
     /// </summary>
-    public class Progress
+    public sealed class Progress
     {
         private readonly BackgroundWorker _backgroundWorker;
         private readonly object? _userState = null;

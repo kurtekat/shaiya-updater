@@ -6,7 +6,7 @@ namespace Updater.Core
     /// <summary>
     /// Represents a replacement updater application.
     /// </summary>
-    public class NewUpdater
+    public sealed class NewUpdater
     {
         public const string FileName = "new_updater.exe";
         public readonly string Path = string.Empty;

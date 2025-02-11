@@ -1,6 +1,6 @@
 ﻿namespace Updater.Core
 {
-    public class ProgressReport
+    public sealed class ProgressReport
     {
         public string Message { get; set; } = string.Empty;
         public int ByProgressBar { get; set; } = 0;
