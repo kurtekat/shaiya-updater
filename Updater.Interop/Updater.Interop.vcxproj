@@ -21,7 +21,12 @@
   <ItemGroup>
     <ClCompile Include="src\AssemblyInfo.cpp" />
     <ClCompile Include="src\Function.cpp" />
-    <ClCompile Include="src\Native.cpp" />
+    <ClCompile Include="src\Native.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Function.h" />
