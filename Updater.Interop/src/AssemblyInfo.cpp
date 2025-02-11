@@ -8,11 +8,9 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyDescriptionAttribute(L"Shaiya Updater Interop DLL")];
 [assembly:AssemblyConfigurationAttribute(L"")];
 [assembly:AssemblyCompanyAttribute(L"shaiya.dev")];
-[assembly:AssemblyProductAttribute(L"Updater.Interop")];
+[assembly:AssemblyProductAttribute(L"")];
 [assembly:AssemblyCopyrightAttribute(L"Copyright (c) 2025 shaiya.dev")];
 [assembly:AssemblyTrademarkAttribute(L"")];
 [assembly:AssemblyCultureAttribute(L"")];
-
-[assembly:AssemblyVersionAttribute(L"1.0.*")];
-
+[assembly:AssemblyVersionAttribute(L"1.0.2")];
 [assembly:ComVisible(false)];
