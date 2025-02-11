@@ -31,7 +31,7 @@ namespace Updater.Helpers
         /// <remarks>https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-writeprivateprofilestringw</remarks>
         public static int WritePrivateProfileString(string section, string? key, string? value, string fileName)
         {
-            if (value is not null)
+            if (value != null)
                 value += '\0';
 
             return DllImport.WritePrivateProfileStringW(section, key, value, fileName);
