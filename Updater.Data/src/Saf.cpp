@@ -24,7 +24,7 @@ int Saf::eraseFile(int64_t offset, int32_t length) const
     }
 }
 
-std::vector<char> Saf::readFile(int64_t offset, int32_t length) const
+int Saf::readFile(int64_t offset, std::vector<char>& output) const
 {
     try
     {
@@ -33,15 +33,13 @@ std::vector<char> Saf::readFile(int64_t offset, int32_t length) const
 
         saf.open(path, std::ios::binary);
         saf.seekg(offset);
-
-        std::vector<char> buffer(length);
-        saf.read(buffer.data(), buffer.size());
+        saf.read(output.data(), output.size());
         saf.close();
-        return buffer;
+        return 0;
     }
     catch (std::exception)
     {
-        return {};
+        return 1;
     }
 }
 

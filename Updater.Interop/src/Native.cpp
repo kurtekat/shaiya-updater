@@ -29,8 +29,8 @@ void Native_DataPatcher(void(*progressCallback)())
             auto& file = it->second;
             if (patch->length > file->length)
             {
-                auto buffer = update->saf->readFile(patch->offset, patch->length);
-                if (buffer.empty())
+                std::vector<char> buffer(patch->length);
+                if (update->saf->readFile(patch->offset, buffer))
                     throw std::runtime_error::exception();
 
                 auto offset = target->saf->writeFile(buffer);
@@ -43,8 +43,8 @@ void Native_DataPatcher(void(*progressCallback)())
             }
             else
             {
-                auto buffer = update->saf->readFile(patch->offset, patch->length);
-                if (buffer.empty())
+                std::vector<char> buffer(patch->length);
+                if (update->saf->readFile(patch->offset, buffer))
                     throw std::runtime_error::exception();
 
                 target->saf->eraseFile(file->offset, file->length);
@@ -56,8 +56,8 @@ void Native_DataPatcher(void(*progressCallback)())
         }
         else
         {
-            auto buffer = update->saf->readFile(patch->offset, patch->length);
-            if (buffer.empty())
+            std::vector<char> buffer(patch->length);
+            if (update->saf->readFile(patch->offset, buffer))
                 throw std::runtime_error::exception();
 
             auto offset = target->saf->writeFile(buffer);
