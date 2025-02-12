@@ -144,4 +144,7 @@
   <data name="Message2" xml:space="preserve">
     <value>Game still in operation. Please try again after closing the game.</value>
   </data>
+  <data name="ProgressMessage8" xml:space="preserve">
+    <value>Rewriting archive</value>
+  </data>
 </root>

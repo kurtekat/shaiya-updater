@@ -140,5 +140,14 @@ namespace Updater.Resources {
                 return ResourceManager.GetString("ProgressMessage7", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rewriting archive.
+        /// </summary>
+        internal static string ProgressMessage8 {
+            get {
+                return ResourceManager.GetString("ProgressMessage8", resourceCulture);
+            }
+        }
     }
 }
