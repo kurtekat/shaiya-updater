@@ -4,6 +4,23 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 using namespace Updater::Interop;
 
+void Function::DataBuilder(Action^ progressCallback)
+{
+    if (!progressCallback)
+    {
+        Native_DataBuilder();
+    }
+    else
+    {
+        auto gch = GCHandle::Alloc(progressCallback);
+        auto ptr = Marshal::GetFunctionPointerForDelegate(progressCallback).ToPointer();
+        auto callback = static_cast<void(*)()>(ptr);
+
+        Native_DataBuilder(callback);
+        gch.Free();
+    }
+}
+
 void Function::DataPatcher(Action^ progressCallback)
 {
     if (!progressCallback)

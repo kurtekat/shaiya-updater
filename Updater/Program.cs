@@ -47,7 +47,7 @@ namespace Updater
                         if (!patch.Exists())
                         {
                             worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage3));
-                            break;
+                            return;
                         }
 
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
@@ -58,7 +58,7 @@ namespace Updater
                         if (!patch.ExtractToCurrentDirectory())
                         {
                             worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage5));
-                            break;
+                            return;
                         }
 
                         IniHelper.WritePrivateProfileString("Version", "StartUpdate", "EXTRACT_END", clientConfiguration.Path);
@@ -81,6 +81,10 @@ namespace Updater
                         var currentVersion = clientConfiguration.CurrentVersion.ToString();
                         IniHelper.WritePrivateProfileString("Version", "CurrentVersion", currentVersion, clientConfiguration.Path);
                     }
+
+                    worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage8));
+                    DataBuilder(worker);
+                    worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage7));
                 }
             }
             catch (Exception ex)
@@ -90,6 +94,30 @@ namespace Updater
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="worker"></param>
+        private static void DataBuilder(BackgroundWorker worker)
+        {
+            if (!File.Exists("data.sah") || !File.Exists("data.saf"))
+                return;
+
+            var binaryReader = new BinaryReader(File.OpenRead("data.sah"));
+            binaryReader.BaseStream.Seek(7, SeekOrigin.Begin);
+
+            var fileCount = binaryReader.ReadInt32();
+            binaryReader.Close();
+
+            var progressReport = new ProgressReport(1);
+            var progress = new Progress(worker, progressReport, fileCount, 1);
+            Function.DataBuilder(progress.PerformStep);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="worker"></param>
         private static void DataPatcher(BackgroundWorker worker)
         {
             if (File.Exists("delete.lst"))

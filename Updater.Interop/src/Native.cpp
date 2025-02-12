@@ -1,5 +1,6 @@
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -13,6 +14,46 @@
 #include <Updater.Data/include/SFolder.h>
 #include "include/Native.h"
 using namespace Updater::Data;
+
+void Native_DataBuilder(void(*progressCallback)())
+{
+    auto data = std::make_unique<Data>("data.sah", "data.saf");
+    data->sah->read();
+
+    std::filesystem::rename("data.sah", "data.sah.bak");
+    std::filesystem::rename("data.saf", "data.saf.bak");
+
+    auto saf = std::make_unique<Saf>(data->saf->path);
+    data->saf->path += ".bak";
+
+    std::function<void(const std::shared_ptr<SFolder>&)> writeFolder;
+    writeFolder = [&data, &saf, &writeFolder, &progressCallback](const auto& currentFolder)
+        {
+            for (auto& [name, file] : currentFolder->files)
+            {
+                std::vector<char> buffer(file->length);
+                if (data->saf->readFile(file->offset, buffer))
+                    throw std::runtime_error::exception();
+
+                auto offset = saf->writeFile(buffer);
+                if (offset == -1)
+                    throw std::runtime_error::exception();
+
+                file->offset = offset;
+
+                if (progressCallback)
+                    progressCallback();
+            }
+
+            for (const auto& [name, subfolder] : currentFolder->subfolders)
+                writeFolder(subfolder);
+        };
+
+    writeFolder(data->sah->rootFolder);
+    data->sah->write();
+    std::remove("data.sah.bak");
+    std::remove("data.saf.bak");
+}
 
 void Native_DataPatcher(void(*progressCallback)())
 {
