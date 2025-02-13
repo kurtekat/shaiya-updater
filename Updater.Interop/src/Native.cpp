@@ -1,6 +1,5 @@
 #include <filesystem>
 #include <fstream>
-#include <functional>
 #include <iostream>
 #include <map>
 #include <memory>
@@ -26,30 +25,28 @@ void Native_DataBuilder(void(*progressCallback)())
     auto saf = std::make_unique<Saf>(data->saf->path);
     data->saf->path += ".bak";
 
-    std::function<void(const std::shared_ptr<SFolder>&)> writeFolder;
-    writeFolder = [&data, &saf, &writeFolder, &progressCallback](const auto& currentFolder)
+    auto writeFolder = [&](const auto& currentFolder, const auto& lambda) -> void {
+        for (auto& [name, file] : currentFolder->files)
         {
-            for (auto& [name, file] : currentFolder->files)
-            {
-                std::vector<char> buffer(file->length);
-                if (data->saf->readFile(file->offset, buffer))
-                    throw std::runtime_error::exception();
+            std::vector<char> buffer(file->length);
+            if (data->saf->readFile(file->offset, buffer))
+                throw std::runtime_error::exception();
 
-                auto offset = saf->writeFile(buffer);
-                if (offset == -1)
-                    throw std::runtime_error::exception();
+            auto offset = saf->writeFile(buffer);
+            if (offset == -1)
+                throw std::runtime_error::exception();
 
-                file->offset = offset;
+            file->offset = offset;
 
-                if (progressCallback)
-                    progressCallback();
-            }
+            if (progressCallback)
+                progressCallback();
+        }
 
-            for (const auto& [name, subfolder] : currentFolder->subfolders)
-                writeFolder(subfolder);
-        };
+        for (const auto& [name, subfolder] : currentFolder->subfolders)
+            lambda(subfolder, lambda);
+    };
 
-    writeFolder(data->sah->rootFolder);
+    writeFolder(data->sah->rootFolder, writeFolder);
     data->sah->write();
     std::remove("data.sah.bak");
     std::remove("data.saf.bak");
