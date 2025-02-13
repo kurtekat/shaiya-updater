@@ -25,7 +25,7 @@ void Native_DataBuilder(void(*progressCallback)())
     auto saf = std::make_unique<Saf>(data->saf->path);
     data->saf->path += ".bak";
 
-    auto writeFolder = [&](const auto& currentFolder, const auto& lambda) -> void {
+    auto writeFolder = [&](const auto& self, const auto& currentFolder) -> void {
         for (auto& [name, file] : currentFolder->files)
         {
             std::vector<char> buffer(file->length);
@@ -43,10 +43,10 @@ void Native_DataBuilder(void(*progressCallback)())
         }
 
         for (const auto& [name, subfolder] : currentFolder->subfolders)
-            lambda(subfolder, lambda);
+            self(self, subfolder);
     };
 
-    writeFolder(data->sah->rootFolder, writeFolder);
+    writeFolder(writeFolder, data->sah->rootFolder);
     data->sah->write();
     std::remove("data.sah.bak");
     std::remove("data.saf.bak");

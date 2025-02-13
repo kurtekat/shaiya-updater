@@ -54,7 +54,7 @@ void Sah::read()
     rootFolderName.pop_back();
     rootFolder = std::make_shared<SFolder>(rootFolderName);
 
-    auto readFolder = [this, &binaryReader](auto& currentFolder, const auto& lambda) -> void {
+    auto readFolder = [this, &binaryReader](const auto& self, auto& currentFolder) -> void {
         folders.insert({ currentFolder->path, currentFolder });
 
         auto fileCount = binaryReader.readInt32();
@@ -80,12 +80,12 @@ void Sah::read()
             subfolderName.pop_back();
 
             auto subfolder = std::make_shared<SFolder>(subfolderName, currentFolder);
-            lambda(subfolder, lambda);
+            self(self, subfolder);
             currentFolder->subfolders.insert({ subfolder->name, subfolder });
         }
     };
 
-    readFolder(rootFolder, readFolder);
+    readFolder(readFolder, rootFolder);
     fileCount = Convert::toInt32(files.size());
     binaryReader.close();
 }
@@ -105,7 +105,7 @@ void Sah::write()
     binaryWriter.write(zeros, 0, 40);
     binaryWriter.write(rootFolder->name.string());
 
-    auto writeFolder = [this, &binaryWriter](const auto& currentFolder, const auto& lambda) -> void {
+    auto writeFolder = [this, &binaryWriter](const auto& self, const auto& currentFolder) -> void {
         auto fileCount = Convert::toInt32(currentFolder->files.size());
         // Encrypt here (e.g., fileCount ^= 1234)
         binaryWriter.write(fileCount);
@@ -124,11 +124,11 @@ void Sah::write()
         for (const auto& [name, subfolder] : currentFolder->subfolders)
         {
             binaryWriter.write(name.string());
-            lambda(subfolder, lambda);
+            self(self, subfolder);
         }
     };
 
-    writeFolder(rootFolder, writeFolder);
+    writeFolder(writeFolder, rootFolder);
     binaryWriter.write(zeros, 0, 8);
     binaryWriter.close();
 }
