@@ -90,7 +90,7 @@ namespace Updater.Core
             Value += value;
             Value = Value > Maximum ? Maximum : Value;
 
-            var percentProgress = MathHelper.Percentage(Value, Maximum);
+            var percentProgress = MathHelper.CalculatePercentage(Value, Maximum);
             _backgroundWorker.ReportProgress(percentProgress, _userState);
         }
 
@@ -103,7 +103,7 @@ namespace Updater.Core
             Value += Step;
             Value = Value > Maximum ? Maximum : Value;
 
-            var percentProgress = MathHelper.Percentage(Value, Maximum);
+            var percentProgress = MathHelper.CalculatePercentage(Value, Maximum);
             _backgroundWorker.ReportProgress(percentProgress, _userState);
         }
     }

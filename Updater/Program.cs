@@ -74,12 +74,12 @@ namespace Updater
                         ++clientConfiguration.CurrentVersion;
                         ++progressValue;
 
-                        var percentProgress = MathHelper.Percentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
+                        var currentVersion = clientConfiguration.CurrentVersion;
+                        var percentProgress = MathHelper.CalculatePercentage((int)currentVersion, (int)serverConfiguration.PatchFileVersion);
                         if (percentProgress > 0)
                             worker.ReportProgress(percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
 
-                        var currentVersion = clientConfiguration.CurrentVersion.ToString();
-                        IniHelper.WritePrivateProfileString("Version", "CurrentVersion", currentVersion, clientConfiguration.Path);
+                        IniHelper.WritePrivateProfileString("Version", "CurrentVersion", currentVersion.ToString(), clientConfiguration.Path);
                     }
                 }
             }
