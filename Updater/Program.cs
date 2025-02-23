@@ -47,7 +47,7 @@ namespace Updater
                         if (!patch.Exists())
                         {
                             worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage3));
-                            break;
+                            return;
                         }
 
                         worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
@@ -58,7 +58,7 @@ namespace Updater
                         if (!patch.ExtractToCurrentDirectory())
                         {
                             worker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage5));
-                            break;
+                            return;
                         }
 
                         IniHelper.WritePrivateProfileString("Version", "StartUpdate", "EXTRACT_END", clientConfiguration.Path);
@@ -92,24 +92,39 @@ namespace Updater
 
         private static void DataPatcher(BackgroundWorker worker)
         {
-            var data = new Data("data.sah", "data.saf");
-            var update = new Data("update.sah", "update.saf");
-
             if (File.Exists("delete.lst"))
             {
-                data.RemoveFilesFromLst("delete.lst");
+                var data = new Data("data.sah", "data.saf");
+                var paths = File.ReadAllLines("delete.lst");
+                var fileCount = paths.Length;
+                if (fileCount <= 0)
+                    throw new FileFormatException();
+
+                var progressReport = new ProgressReport(1);
+                var progress = new Progress(worker, progressReport, fileCount, 1);
+
+                data.RemoveFilesFromLst("delete.lst", progress.PerformStep);
                 data.Sah.Write(data.Sah.Path);
                 File.Delete("delete.lst");
             }
 
-            var progressReport = new ProgressReport(1);
-            var progress = new Progress(worker, progressReport, update.FileCount, 1);
-            using (var dataPatcher = new DataPatcher())
-                dataPatcher.Patch(data, update, progress.PerformStep);
+            if (File.Exists("update.sah") && File.Exists("update.saf"))
+            {
+                var data = new Data("data.sah", "data.saf");
+                var update = new Data("update.sah", "update.saf");
+                if (update.FileCount <= 0)
+                    throw new FileFormatException();
 
-            data.Sah.Write(data.Sah.Path);
-            File.Delete("update.sah");
-            File.Delete("update.saf");
+                var progressReport = new ProgressReport(1);
+                var progress = new Progress(worker, progressReport, update.FileCount, 1);
+
+                using (var dataPatcher = new DataPatcher())
+                    dataPatcher.Patch(data, update, progress.PerformStep);
+
+                data.Sah.Write(data.Sah.Path);
+                File.Delete("update.sah");
+                File.Delete("update.saf");
+            }
         }
 
         /// <summary>
