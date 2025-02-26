@@ -14,10 +14,10 @@ namespace Updater.Core
         public readonly string Url = string.Empty;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Patch"/> class with the <paramref name="version"/> parameter.
+        /// Initializes a new instance of the <see cref="Patch"/> class.
         /// </summary>
         /// <param name="version">The patch version number.</param>
-        /// <exception cref="ArgumentException">The specified version is less than 2 or greater than 9999.</exception>
+        /// <exception cref="ArgumentException"></exception>
         public Patch(uint version)
         {
             if (version < 2 || version > 9999)
@@ -30,38 +30,19 @@ namespace Updater.Core
         }
 
         /// <summary>
-        /// Deletes the patch file.
-        /// </summary>
-        public void Delete()
-        {
-            if (Exists())
-                File.Delete(Path);
-        }
-
-        /// <summary>
-        /// Determines whether the patch file exists.
-        /// </summary>
-        /// <returns></returns>
-        public bool Exists() => File.Exists(Path);
-
-        /// <summary>
         /// Extracts all of the files in the archive to the current working directory of the application.
         /// </summary>
-        /// <returns><see langword="false"/> if the file does not exist or an exception is caught. Otherwise, <see langword="true"/>.</returns>
+        /// <returns>A value that indicates whether the operation was successful.</returns>
         public bool ExtractToCurrentDirectory()
         {
-            if (Exists())
+            try
             {
-                try
-                {
-                    using (var zipArchive = ZipFile.OpenRead(Path))
-                        zipArchive.ExtractToDirectory(Directory.GetCurrentDirectory(), true);
+                using (var zipArchive = ZipFile.OpenRead(Path))
+                    zipArchive.ExtractToDirectory(Directory.GetCurrentDirectory(), true);
 
-                    return true;
-                }
-                catch { }
+                return true;
             }
-
+            catch { }
             return false;
         }
     }
