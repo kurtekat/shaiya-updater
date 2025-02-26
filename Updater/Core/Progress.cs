@@ -6,105 +6,123 @@ namespace Updater.Core
     /// <summary>
     /// Represents the progress of a <see cref="BackgroundWorker"/> operation.
     /// </summary>
-    public sealed class Progress
+    public sealed class Progress : IProgress<int>
     {
         private readonly BackgroundWorker _backgroundWorker;
         private readonly object? _userState = null;
+        private int _maximum = 100;
+        private int _step = 10;
+        private int _value;
 
         /// <summary>
-        /// The maximum value of the range. The default is 100.
-        /// </summary>
-        public int Maximum { get; set; } = 100;
-
-        /// <summary>
-        /// The amount by which to increment the <see cref="Value"/> with each call to the <see cref="PerformStep"/> method. The default is 10.
-        /// </summary>
-        public int Step { get; set; } = 10;
-
-        /// <summary>
-        /// The position within the range. The default is 0.
-        /// </summary>
-        public int Value { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Progress"/> class with the <paramref name="backgroundWorker"/> 
-        /// and <paramref name="userState"/> parameters.
+        /// Initializes a new instance of the <see cref="Progress"/> class.
         /// </summary>
         /// <param name="backgroundWorker"></param>
-        /// <param name="userState">A unique <see cref="object"/> indicating the user state.</param>
-        public Progress(BackgroundWorker backgroundWorker, object? userState)
-        {
-            _backgroundWorker = backgroundWorker;
-            _backgroundWorker.WorkerReportsProgress = true;
-            _userState = userState;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Progress"/> class with the <paramref name="backgroundWorker"/>, 
-        /// <paramref name="userState"/>, and <paramref name="maximum"/> parameters.
-        /// </summary>
-        /// <param name="backgroundWorker"></param>
-        /// <param name="userState">A unique <see cref="object"/> indicating the user state.</param>
-        /// <param name="maximum">The maximum value of the range.</param>
-        /// <exception cref="ArgumentException">The specified maximum is less than 0.</exception>
-        public Progress(BackgroundWorker backgroundWorker, object? userState, int maximum)
+        /// <param name="userState">A unique object indicating the user state.</param>
+        /// <param name="maximum">The maximum value of the range. The default is 100.</param>
+        /// <param name="step">The amount that a call to the <see cref='PerformStep'/> method increases the current value. The default is 10.</param>
+        /// <exception cref="ArgumentException"></exception>
+        public Progress(BackgroundWorker backgroundWorker, object? userState, int maximum = 100, int step = 10)
         {
             if (maximum < 0)
                 throw new ArgumentException(null, nameof(maximum));
 
-            Maximum = maximum;
-
             _backgroundWorker = backgroundWorker;
             _backgroundWorker.WorkerReportsProgress = true;
             _userState = userState;
+            _maximum = maximum;
+            _step = step;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Progress"/> class with the <paramref name="backgroundWorker"/>, 
-        /// <paramref name="userState"/>, <paramref name="maximum"/>, and <paramref name="step"/> parameters.
+        /// Advances the current value by the specified amount.
         /// </summary>
-        /// <param name="backgroundWorker"></param>
-        /// <param name="userState">A unique <see cref="object"/> indicating the user state.</param>
-        /// <param name="maximum">The maximum value of the range.</param>
-        /// <param name="step">The amount by which to increment the <see cref="Value"/> with each call to the <see cref="PerformStep"/> method.</param>
-        /// <exception cref="ArgumentException">The specified maximum is less than 0.</exception>
-        public Progress(BackgroundWorker backgroundWorker, object? userState, int maximum, int step)
-        {
-            if (maximum < 0)
-                throw new ArgumentException(null, nameof(maximum));
-
-            Maximum = maximum;
-            Step = step;
-
-            _backgroundWorker = backgroundWorker;
-            _backgroundWorker.WorkerReportsProgress = true;
-            _userState = userState;
-        }
-
-        /// <summary>
-        /// Advances the current <see cref="Value"/> by the specified amount and raises the <see cref="BackgroundWorker.ProgressChanged"/> event.
-        /// </summary>
-        /// <param name="value">The amount by which to increment the current <see cref="Value"/>.</param>
+        /// <param name="value"></param>
         public void Increment(int value)
         {
-            Value += value;
-            Value = Value > Maximum ? Maximum : Value;
+            _value += value;
 
-            var percentProgress = MathHelper.CalculatePercentage(Value, Maximum);
-            _backgroundWorker.ReportProgress(percentProgress, _userState);
+            if (_value < 0)
+                _value = 0;
+
+            if (_value > _maximum)
+                _value = _maximum;
+
+            Report(_value);
         }
 
         /// <summary>
-        /// Advances the current <see cref="Value"/> by the amount of the <see cref="Step"/> property and 
-        /// raises the <see cref="BackgroundWorker.ProgressChanged"/> event.
+        /// Advances the current value by the amount of the step property.
         /// </summary>
         public void PerformStep()
         {
-            Value += Step;
-            Value = Value > Maximum ? Maximum : Value;
+            Increment(_step);
+        }
 
-            var percentProgress = MathHelper.CalculatePercentage(Value, Maximum);
+        /// <summary>
+        /// Reports a progress update.
+        /// </summary>
+        /// <param name="value">The value of the updated progress.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public void Report(int value)
+        {
+            if (value < 0 || value > _maximum)
+                throw new ArgumentOutOfRangeException(nameof(value), value, null);
+
+            var percentProgress = MathHelper.CalculatePercentage(value, _maximum);
             _backgroundWorker.ReportProgress(percentProgress, _userState);
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum value of the progress.
+        /// </summary>
+        public int Maximum
+        {
+            get => _maximum;
+            set
+            {
+                if (value == _maximum)
+                    return;
+
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, null);
+
+                _maximum = value;
+
+                if (_value > _maximum)
+                    _value = _maximum;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the amount that a call to the <see cref='PerformStep'/> method increases the current value.
+        /// </summary>
+        public int Step
+        {
+            get => _step;
+            set
+            {
+                _step = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the current value of the progress.
+        /// </summary>
+        public int Value
+        {
+            get => _value;
+            set
+            {
+                if (value == _value)
+                    return;
+
+                if (value < 0 || value > _maximum)
+                    throw new ArgumentOutOfRangeException(nameof(value), value, null);
+
+                _value = value;
+                Report(_value);
+            }
         }
     }
 }
