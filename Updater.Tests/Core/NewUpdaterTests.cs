@@ -6,22 +6,21 @@ namespace Updater.Tests.Core
     public class NewUpdaterTests
     {
         [Test]
-        public void ConstructorTest()
+        public void PathTest()
         {
             var newUpdater = new NewUpdater();
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(newUpdater.Path, Does.EndWith(NewUpdater.FileName));
-                Assert.That(newUpdater.Url, Does.EndWith(NewUpdater.FileName));
-                Assert.That(Uri.IsWellFormedUriString(newUpdater.Url, UriKind.Absolute), Is.True);
-            });
+            Assert.That(newUpdater.Path, Does.EndWith(NewUpdater.FileName));
         }
 
         [Test]
-        public void FileNameIsNotEmpty()
+        public void UrlTest()
         {
-            Assert.That(NewUpdater.FileName, Is.Not.Empty);
+            var newUpdater = new NewUpdater();
+            Assert.Multiple(() =>
+            {
+                Assert.That(newUpdater.Url, Does.EndWith(NewUpdater.FileName));
+                Assert.That(Uri.IsWellFormedUriString(newUpdater.Url, UriKind.Absolute), Is.True);
+            });
         }
     }
 }

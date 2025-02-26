@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using Updater.Core;
 
 namespace Updater.Tests.Core
@@ -7,22 +8,45 @@ namespace Updater.Tests.Core
     {
         private const string PatchFileName = "ps0002.patch";
         private const uint PatchFileVersion = 2;
+        private Patch _patch;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _patch = new Patch(PatchFileVersion);
+        }
 
         [Test]
-        public void ConstructorTest()
+        public void ExtractToCurrentDirectoryTest()
         {
-            var patch = new Patch(PatchFileVersion);
+            if (File.Exists(_patch.Path))
+            {
+                Assert.That(_patch.ExtractToCurrentDirectory(), Is.True);
 
+                using var zipArchive = ZipFile.OpenRead(_patch.Path);
+                foreach (var entry in zipArchive.Entries)
+                    Assert.That(File.Exists(entry.FullName), Is.True);
+            }
+        }
+
+        [Test]
+        public void PathTest()
+        {
+            Assert.That(_patch.Path, Does.EndWith(PatchFileName));
+        }
+
+        [Test]
+        public void UrlTest()
+        {
             Assert.Multiple(() =>
             {
-                Assert.That(patch.Path, Does.EndWith(PatchFileName));
-                Assert.That(patch.Url, Does.EndWith(PatchFileName));
-                Assert.That(Uri.IsWellFormedUriString(patch.Url, UriKind.Absolute), Is.True);
+                Assert.That(_patch.Url, Does.EndWith(PatchFileName));
+                Assert.That(Uri.IsWellFormedUriString(_patch.Url, UriKind.Absolute), Is.True);
             });
         }
 
         [Test]
-        public void ShouldThrowArgumentException()
+        public void VersionParameterTest()
         {
             Assert.Throws<ArgumentException>(() => new Patch(1));
             Assert.Throws<ArgumentException>(() => new Patch(10000));
