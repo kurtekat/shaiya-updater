@@ -16,7 +16,7 @@ namespace Updater.Core
         public uint UpdaterVersion { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServerConfiguration"/> class with the <paramref name="httpClient"/> parameter.
+        /// Initializes a new instance of the <see cref="ServerConfiguration"/> class.
         /// </summary>
         /// <param name="httpClient"></param>
         public ServerConfiguration(HttpClient httpClient)
