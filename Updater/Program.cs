@@ -145,7 +145,9 @@ namespace Updater
 
             var fileName = Path.Combine(Directory.GetCurrentDirectory(), "game.exe");
             Process.Start(fileName, "new updater");
-            _ = DllImport.TerminateProcess(DllImport.GetCurrentProcess(), 0);
+
+            var currentProcess = Process.GetCurrentProcess();
+            currentProcess.Kill();
         }
     }
 }
