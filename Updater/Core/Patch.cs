@@ -18,7 +18,7 @@ namespace Updater.Core
         /// </summary>
         /// <param name="version">The patch version number.</param>
         /// <exception cref="ArgumentException"></exception>
-        public Patch(uint version)
+        public Patch(int version)
         {
             if (version < 2 || version > 9999)
                 throw new ArgumentException(null, nameof(version));

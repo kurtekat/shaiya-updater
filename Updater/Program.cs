@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Windows;
 using Parsec.Shaiya.Data;
 using Updater.Common;
+using Updater.Configuration;
 using Updater.Core;
 using Updater.Extensions;
 using Updater.Helpers;
@@ -16,10 +17,13 @@ namespace Updater
     {
         public static void DoWork(HttpClient httpClient, BackgroundWorker backgroundWorker)
         {
+            ClientConfiguration? clientConfiguration = null;
+            ServerConfiguration? serverConfiguration = null;
+
             try
             {
-                var serverConfiguration = new ServerConfiguration(httpClient);
-                var clientConfiguration = new ClientConfiguration();
+                serverConfiguration = new ServerConfiguration(httpClient);
+                clientConfiguration = new ClientConfiguration();
 
                 if (serverConfiguration.UpdaterVersion > Constants.UpdaterVersion)
                 {
@@ -33,8 +37,8 @@ namespace Updater
                     backgroundWorker.ReportProgress(0, new ProgressReport(1));
                     backgroundWorker.ReportProgress(0, new ProgressReport(2));
 
-                    uint progressMax = serverConfiguration.PatchFileVersion - clientConfiguration.CurrentVersion;
-                    uint progressValue = 1;
+                    int progressMax = serverConfiguration.PatchFileVersion - clientConfiguration.CurrentVersion;
+                    int progressValue = 1;
 
                     while (clientConfiguration.CurrentVersion < serverConfiguration.PatchFileVersion)
                     {
@@ -51,35 +55,30 @@ namespace Updater
                         }
 
                         backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
-                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "EXTRACT_START", clientConfiguration.Path);
+                        clientConfiguration.StartUpdate = "EXTRACT_START";
 
-                        // Issue: antivirus software could be scanning a file from a previous patch
-                        // when this method tries to overwrite it.
+                        // Issue: antivirus software could be scanning a file when this method tries to overwrite it.
                         if (!patch.ExtractToCurrentDirectory())
                         {
                             backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage5));
                             return;
                         }
 
-                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "EXTRACT_END", clientConfiguration.Path);
+                        clientConfiguration.StartUpdate = "EXTRACT_END";
                         File.Delete(patch.Path);
 
                         backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage6));
-                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "UPDATE_START", clientConfiguration.Path);
+                        clientConfiguration.StartUpdate = "UPDATE_START";
 
                         DataPatcher(backgroundWorker);
 
-                        IniHelper.WritePrivateProfileString("Version", "StartUpdate", "UPDATE_END", clientConfiguration.Path);
+                        clientConfiguration.StartUpdate = "UPDATE_END";
+                        clientConfiguration.CurrentVersion++;
+                        progressValue++;
 
-                        ++clientConfiguration.CurrentVersion;
-                        ++progressValue;
-
-                        var currentVersion = clientConfiguration.CurrentVersion;
-                        var percentProgress = MathHelper.CalculatePercentage((int)currentVersion, (int)serverConfiguration.PatchFileVersion);
+                        var percentProgress = MathHelper.CalculatePercentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
                         if (percentProgress > 0)
                             backgroundWorker.ReportProgress(percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
-
-                        IniHelper.WritePrivateProfileString("Version", "CurrentVersion", currentVersion.ToString(), clientConfiguration.Path);
                     }
                 }
             }
@@ -87,6 +86,12 @@ namespace Updater
             {
                 var caption = Application.ResourceAssembly.GetName().Name;
                 MessageBox.Show(ex.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                clientConfiguration?.Save();
+                clientConfiguration?.Dispose();
+                serverConfiguration?.Dispose();
             }
         }
 
