@@ -23,25 +23,17 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void IncrementGreaterThanMaximumTest()
-        {
-            _progress.Increment(_progress.Maximum + 1);
-            Assert.That(_progress.Value, Is.Not.GreaterThan(_progress.Maximum));
-        }
-
-        [Test]
-        public void IncrementLessThanZeroTest()
-        {
-            _progress.Increment(-1);
-            Assert.That(_progress.Value, Is.Not.LessThan(0));
-        }
-
-        [Test]
         public void IncrementTest()
         {
             var value = 1;
             _progress.Increment(value);
             Assert.That(_progress.Value, Is.EqualTo(value));
+
+            _progress.Increment(-1);
+            Assert.That(_progress.Value, Is.Not.LessThan(0));
+
+            _progress.Increment(_progress.Maximum + 1);
+            Assert.That(_progress.Value, Is.Not.GreaterThan(_progress.Maximum));
         }
 
         [Test]
@@ -51,47 +43,33 @@ namespace Updater.Tests.Core
         }
 
         [Test]
-        public void MaximumSetLessThanZeroTest()
+        public void PerformStepTest()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => _progress.Maximum = -1);
-        }
+            _progress.PerformStep();
+            Assert.That(_progress.Value, Is.EqualTo(_progress.Step));
 
-        [Test]
-        public void PerformStepGreaterThanMaximumTest()
-        {
             _progress.Value = _progress.Maximum;
             _progress.PerformStep();
             Assert.That(_progress.Value, Is.Not.GreaterThan(_progress.Maximum));
         }
 
         [Test]
-        public void PerformStepTest()
-        {
-            _progress.PerformStep();
-            Assert.That(_progress.Value, Is.EqualTo(_progress.Step));
-        }
-
-        [Test]
-        public void ReportLessThanZeroTest()
+        public void ReportOutOfRangeTest()
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => _progress.Report(-1));
-        }
-
-        [Test]
-        public void ReportGreaterThanMaximumTest()
-        {
             Assert.Throws<ArgumentOutOfRangeException>(() => _progress.Report(_progress.Maximum + 1));
         }
 
         [Test]
-        public void ValueSetLessThanZeroTest()
+        public void SetMaximumOutOfRangeTest()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => _progress.Value = -1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => _progress.Maximum = -1);
         }
 
         [Test]
-        public void ValueSetGreaterThanMaximumTest()
+        public void SetValueOutOfRangeTest()
         {
+            Assert.Throws<ArgumentOutOfRangeException>(() => _progress.Value = -1);
             Assert.Throws<ArgumentOutOfRangeException>(() => _progress.Value = _progress.Maximum + 1);
         }
     }

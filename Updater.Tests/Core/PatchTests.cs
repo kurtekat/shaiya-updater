@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using Updater.Core;
+using Updater.Extensions;
 
 namespace Updater.Tests.Core
 {
@@ -7,18 +8,28 @@ namespace Updater.Tests.Core
     public class PatchTests
     {
         private const string PatchFileName = "ps0002.patch";
-        private const uint PatchFileVersion = 2;
+        private const int PatchFileVersion = 2;
         private Patch _patch;
+        private HttpClient _httpClient;
 
         [SetUp]
         public void SetUp()
         {
             _patch = new Patch(PatchFileVersion);
+            _httpClient = new HttpClient();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _httpClient.Dispose();
         }
 
         [Test]
         public void ExtractToCurrentDirectoryTest()
         {
+            _httpClient.DownloadFile(_patch.Url, _patch.FileName);
+
             if (File.Exists(_patch.Path))
             {
                 Assert.That(_patch.ExtractToCurrentDirectory(), Is.True);
