@@ -17,10 +17,6 @@ namespace Updater.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="Progress"/> class.
         /// </summary>
-        /// <param name="backgroundWorker"></param>
-        /// <param name="userState">A unique object indicating the user state.</param>
-        /// <param name="maximum">The maximum value of the range. The default is 100.</param>
-        /// <param name="step">The amount that a call to the <see cref='PerformStep'/> method increases the current value. The default is 10.</param>
         /// <exception cref="ArgumentException"></exception>
         public Progress(BackgroundWorker backgroundWorker, object? userState, int maximum = 100, int step = 10)
         {
@@ -37,7 +33,6 @@ namespace Updater.Core
         /// <summary>
         /// Advances the current value by the specified amount.
         /// </summary>
-        /// <param name="value"></param>
         public void Increment(int value)
         {
             _value += value;

@@ -18,7 +18,6 @@
         /// <summary>
         /// <inheritdoc cref="ProgressReport.ProgressReport"/>
         /// </summary>
-        /// <param name="message"></param>
         public ProgressReport(string message)
         {
             Message = message;
@@ -27,7 +26,6 @@
         /// <summary>
         /// <inheritdoc cref="ProgressReport.ProgressReport"/>
         /// </summary>
-        /// <param name="byProgressBar"></param>
         public ProgressReport(int byProgressBar)
         {
             ByProgressBar = byProgressBar;
@@ -36,8 +34,6 @@
         /// <summary>
         /// <inheritdoc cref="ProgressReport.ProgressReport"/>
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="byProgressBar"></param>
         public ProgressReport(string message, int byProgressBar)
         {
             Message = message;

@@ -20,7 +20,6 @@ namespace Updater.Configuration
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerConfiguration"/> class.
         /// </summary>
-        /// <param name="httpClient"></param>
         public ServerConfiguration(HttpClient httpClient) : base(new IniConfigurationSource())
         {
             Source.Path = Path.Combine(Directory.GetCurrentDirectory(), FileName);

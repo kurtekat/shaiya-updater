@@ -139,7 +139,6 @@ namespace Updater
         /// Expect the client to delete the old updater, rename the new updater and create 
         /// an updater process.
         /// </summary>
-        /// <param name="httpClient"></param>
         private static void UpdaterPatcher(HttpClient httpClient)
         {
             var newUpdater = new NewUpdater();
