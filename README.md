@@ -6,13 +6,13 @@ Windows 10
 
 Visual Studio 2022
 
-C# 10
+C# 12
 
 Windows Presentation Foundation (WPF)
 
 ## Prerequisites
 
-[.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+[.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 
 ## Dependencies
 
@@ -25,17 +25,6 @@ Windows Presentation Foundation (WPF)
 ## Build
 
 Use **Publish** instead of **Build** to output a single executable. (recommended)
-
-## System Requirements
-
-OS            | Version           |
---------------|-------------------|
-Windows 7     | SP1 *\**          |
-Windows 8     | 8.1               |
-Windows 10    | Version 1607+     |
-Windows 11    | Version 22000+    |
-
-*\** Windows 7 SP1 is supported with Extended Security Updates installed.
 
 ## Screenshots
 
