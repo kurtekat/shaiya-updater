@@ -27,47 +27,47 @@ namespace Updater
 
                 if (serverConfiguration.UpdaterVersion > Constants.UpdaterVersion)
                 {
-                    backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage1));
+                    backgroundWorker.ReportProgress(0, Strings.ProgressMessage1);
                     UpdaterPatcher(httpClient);
                     return;
                 }
 
                 if (serverConfiguration.PatchFileVersion > clientConfiguration.CurrentVersion)
                 {
-                    backgroundWorker.ReportProgress(0, new ProgressReport(1));
-                    backgroundWorker.ReportProgress(0, new ProgressReport(2));
+                    backgroundWorker.ReportProgress(0, new ProgressReport("ProgressBar1"));
+                    backgroundWorker.ReportProgress(0, new ProgressReport("ProgressBar2"));
 
                     int progressMax = serverConfiguration.PatchFileVersion - clientConfiguration.CurrentVersion;
                     int progressValue = 1;
 
                     while (clientConfiguration.CurrentVersion < serverConfiguration.PatchFileVersion)
                     {
-                        var progressMessage = string.Format(Strings.ProgressMessage2, progressValue, progressMax);
-                        backgroundWorker.ReportProgress(0, new ProgressReport(progressMessage));
+                        var progressText = string.Format(Strings.ProgressMessage2, progressValue, progressMax);
+                        backgroundWorker.ReportProgress(0, progressText);
 
                         var patch = new Patch(clientConfiguration.CurrentVersion + 1);
                         httpClient.DownloadFile(patch.Url, patch.Path);
 
                         if (!File.Exists(patch.Path))
                         {
-                            backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage3));
+                            backgroundWorker.ReportProgress(0, Strings.ProgressMessage3);
                             return;
                         }
 
-                        backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage4));
+                        backgroundWorker.ReportProgress(0, Strings.ProgressMessage4);
                         clientConfiguration.StartUpdate = "EXTRACT_START";
 
                         // Issue: antivirus software could be scanning a file when this method tries to overwrite it.
                         if (!patch.ExtractToCurrentDirectory())
                         {
-                            backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage5));
+                            backgroundWorker.ReportProgress(0, Strings.ProgressMessage5);
                             return;
                         }
 
                         clientConfiguration.StartUpdate = "EXTRACT_END";
                         File.Delete(patch.Path);
 
-                        backgroundWorker.ReportProgress(0, new ProgressReport(Strings.ProgressMessage6));
+                        backgroundWorker.ReportProgress(0, Strings.ProgressMessage6);
                         clientConfiguration.StartUpdate = "UPDATE_START";
 
                         DataPatcher(backgroundWorker);
@@ -76,9 +76,12 @@ namespace Updater
                         clientConfiguration.CurrentVersion++;
                         progressValue++;
 
-                        var percentProgress = MathHelper.Percentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
-                        if (percentProgress > 0)
-                            backgroundWorker.ReportProgress(percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
+                        var progressPercentage = MathHelper.Percentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
+                        if (progressPercentage > 0)
+                        {
+                            backgroundWorker.ReportProgress(0, Strings.ProgressMessage7);
+                            backgroundWorker.ReportProgress(progressPercentage, new ProgressReport("ProgressBar2"));
+                        }
                     }
                 }
             }
@@ -105,7 +108,7 @@ namespace Updater
                 if (fileCount <= 0)
                     throw new FileFormatException();
 
-                var progressReport = new ProgressReport(1);
+                var progressReport = new ProgressReport("ProgressBar1");
                 var progress = new Progress(backgroundWorker, progressReport, fileCount, 1);
 
                 data.RemoveFilesFromLst("delete.lst", progress.PerformStep);
@@ -120,7 +123,7 @@ namespace Updater
                 if (update.FileCount <= 0)
                     throw new FileFormatException();
 
-                var progressReport = new ProgressReport(1);
+                var progressReport = new ProgressReport("ProgressBar1");
                 var progress = new Progress(backgroundWorker, progressReport, update.FileCount, 1);
 
                 using (var dataPatcher = new DataPatcher())

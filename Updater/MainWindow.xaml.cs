@@ -51,7 +51,8 @@ namespace Updater
             if (sender == null)
                 return;
 
-            _backgroundWorker1.ReportProgress(e.ProgressPercentage, new ProgressReport(1));
+            var progressReport = new ProgressReport(ProgressBar1.Name);
+            _backgroundWorker1.ReportProgress(e.ProgressPercentage, progressReport);
         }
 
         private void BackgroundWorker1_DoWork(object? sender, DoWorkEventArgs e)
@@ -61,18 +62,28 @@ namespace Updater
 
         private void BackgroundWorker1_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            if (e.UserState == null)
-                return;
+            if (e.UserState is string text)
+            {
+                TextBox1.Text = text;
+            }
 
             if (e.UserState is ProgressReport progressReport)
             {
-                if (!string.IsNullOrEmpty(progressReport.Message))
-                    TextBox1.Text = progressReport.Message;
+                if (progressReport.Value != null)
+                {
+                    if (progressReport.Value is string value)
+                    {
+                        if (value == ProgressBar1.Name)
+                        {
+                            ProgressBar1.Value = e.ProgressPercentage;
+                        }
 
-                if (progressReport.ByProgressBar == 1)
-                    ProgressBar1.Value = e.ProgressPercentage;       
-                else if (progressReport.ByProgressBar == 2)
-                    ProgressBar2.Value = e.ProgressPercentage;
+                        if (value == ProgressBar2.Name)
+                        {
+                            ProgressBar2.Value = e.ProgressPercentage;
+                        }
+                    }
+                }
             }
         }
 
