@@ -42,7 +42,7 @@ namespace Updater.Configuration
                 throw new InvalidOperationException();
 
             var contents = new List<string>();
-            var sections = GetChildKeys(Enumerable.Empty<string>(), null).Distinct();
+            var sections = GetChildKeys([], null).Distinct();
 
             foreach (var section in sections)
             {

@@ -20,7 +20,7 @@ namespace Updater.Core
         /// <exception cref="ArgumentException"></exception>
         public Patch(int version)
         {
-            if (version < 2 || version > 9999)
+            if (version < 0 || version > 9999)
                 throw new ArgumentException(null, nameof(version));
 
             // e.g., ps0002.patch

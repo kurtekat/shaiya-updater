@@ -59,7 +59,7 @@ namespace Updater.Tests.Core
         [Test]
         public void VersionParameterTest()
         {
-            Assert.Throws<ArgumentException>(() => new Patch(1));
+            Assert.Throws<ArgumentException>(() => new Patch(-1));
             Assert.Throws<ArgumentException>(() => new Patch(10000));
         }
     }
