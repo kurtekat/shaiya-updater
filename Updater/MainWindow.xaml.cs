@@ -51,8 +51,7 @@ namespace Updater
             if (sender == null)
                 return;
 
-            var progressReport = new ProgressReport(ProgressBar1.Name);
-            _backgroundWorker1.ReportProgress(e.ProgressPercentage, progressReport);
+            _backgroundWorker1.ReportProgress(e.ProgressPercentage, new ProgressReport("ProgressBar1"));
         }
 
         private void BackgroundWorker1_DoWork(object? sender, DoWorkEventArgs e)
