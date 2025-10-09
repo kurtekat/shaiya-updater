@@ -48,7 +48,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="8.0.0" />
-    <PackageReference Include="Parsec.Shaiya.Data" Version="1.0.4" />
+    <PackageReference Include="Parsec.Shaiya.Data" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>
