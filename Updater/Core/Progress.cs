@@ -64,8 +64,8 @@ namespace Updater.Core
             if (value < 0 || value > _maximum)
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
 
-            var percentProgress = MathHelper.CalculatePercentage(value, _maximum);
-            _backgroundWorker.ReportProgress(percentProgress, _userState);
+            var progressPercentage = MathHelper.Percentage(value, _maximum);
+            _backgroundWorker.ReportProgress(progressPercentage, _userState);
         }
 
         /// <summary>

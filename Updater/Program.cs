@@ -76,7 +76,7 @@ namespace Updater
                         clientConfiguration.CurrentVersion++;
                         progressValue++;
 
-                        var percentProgress = MathHelper.CalculatePercentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
+                        var percentProgress = MathHelper.Percentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
                         if (percentProgress > 0)
                             backgroundWorker.ReportProgress(percentProgress, new ProgressReport(Strings.ProgressMessage7, 2));
                     }

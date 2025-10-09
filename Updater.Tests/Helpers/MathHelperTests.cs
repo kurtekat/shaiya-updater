@@ -8,9 +8,9 @@ namespace Updater.Tests.Helpers
         [TestCase(-1, 1, ExpectedResult = -100)]
         [TestCase(10, 1, ExpectedResult = 1000)]
         [TestCase(1, 0, ExpectedResult = int.MinValue)]
-        public int CalculatePercentageTest(int part, int whole)
+        public int PercentageTest(int part, int whole)
         {
-            return MathHelper.CalculatePercentage(part, whole);
+            return MathHelper.Percentage(part, whole);
         }
     }
 }
