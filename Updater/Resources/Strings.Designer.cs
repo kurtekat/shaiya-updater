@@ -61,20 +61,20 @@ namespace Updater.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The application is already running..
+        ///   Looks up a localized string similar to Please close the game application..
         /// </summary>
-        internal static string MessageBoxText1 {
+        internal static string GameWindow {
             get {
-                return ResourceManager.GetString("MessageBoxText1", resourceCulture);
+                return ResourceManager.GetString("GameWindow", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please close the game application..
+        ///   Looks up a localized string similar to The application is already running..
         /// </summary>
-        internal static string MessageBoxText2 {
+        internal static string SingleInstance {
             get {
-                return ResourceManager.GetString("MessageBoxText2", resourceCulture);
+                return ResourceManager.GetString("SingleInstance", resourceCulture);
             }
         }
         

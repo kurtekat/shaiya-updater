@@ -138,10 +138,10 @@
   <data name="UserState7" xml:space="preserve">
     <value>Update completed</value>
   </data>
-  <data name="MessageBoxText1" xml:space="preserve">
+  <data name="SingleInstance" xml:space="preserve">
     <value>The application is already running.</value>
   </data>
-  <data name="MessageBoxText2" xml:space="preserve">
+  <data name="GameWindow" xml:space="preserve">
     <value>Please close the game application.</value>
   </data>
 </root>

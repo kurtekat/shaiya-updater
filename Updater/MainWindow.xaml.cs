@@ -96,7 +96,7 @@ namespace Updater
 
             if (DllImport.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
             {
-                MessageBox.Show(Strings.MessageBoxText2, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Strings.GameWindow, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
