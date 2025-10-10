@@ -102,6 +102,7 @@ namespace Updater
             {
                 var data = new Data("data.sah", "data.saf");
                 var paths = File.ReadAllLines("delete.lst");
+
                 var fileCount = paths.Length;
                 if (fileCount <= 0)
                     throw new FileFormatException();
@@ -118,11 +119,13 @@ namespace Updater
             {
                 var data = new Data("data.sah", "data.saf");
                 var update = new Data("update.sah", "update.saf");
-                if (update.FileCount <= 0)
+
+                var fileCount = update.FileCount;
+                if (fileCount <= 0)
                     throw new FileFormatException();
 
                 var progressReport = new ProgressReport("ProgressBar1");
-                var progress = new Progress(backgroundWorker, progressReport, update.FileCount, 1);
+                var progress = new Progress(backgroundWorker, progressReport, fileCount, 1);
 
                 using (var dataPatcher = new DataPatcher())
                     dataPatcher.Patch(data, update, progress.PerformStep);
