@@ -27,7 +27,7 @@ namespace Updater
 
                 if (serverConfiguration.UpdaterVersion > Constants.UpdaterVersion)
                 {
-                    backgroundWorker.ReportProgress(0, Strings.ProgressMessage1);
+                    backgroundWorker.ReportProgress(0, Strings.UserState1);
                     UpdaterPatcher(httpClient);
                     return;
                 }
@@ -42,7 +42,7 @@ namespace Updater
 
                     while (clientConfiguration.CurrentVersion < serverConfiguration.PatchFileVersion)
                     {
-                        var progressText = string.Format(Strings.ProgressMessage2, progressValue, progressMax);
+                        var progressText = string.Format(Strings.UserState2, progressValue, progressMax);
                         backgroundWorker.ReportProgress(0, progressText);
 
                         var patch = new Patch(clientConfiguration.CurrentVersion + 1);
@@ -50,24 +50,23 @@ namespace Updater
 
                         if (!File.Exists(patch.Path))
                         {
-                            backgroundWorker.ReportProgress(0, Strings.ProgressMessage3);
+                            backgroundWorker.ReportProgress(0, Strings.UserState3);
                             return;
                         }
 
-                        backgroundWorker.ReportProgress(0, Strings.ProgressMessage4);
+                        backgroundWorker.ReportProgress(0, Strings.UserState4);
                         clientConfiguration.StartUpdate = "EXTRACT_START";
 
-                        // Issue: antivirus software could be scanning a file when this method tries to overwrite it.
                         if (!patch.ExtractToCurrentDirectory())
                         {
-                            backgroundWorker.ReportProgress(0, Strings.ProgressMessage5);
+                            backgroundWorker.ReportProgress(0, Strings.UserState5);
                             return;
                         }
 
                         clientConfiguration.StartUpdate = "EXTRACT_END";
                         File.Delete(patch.Path);
 
-                        backgroundWorker.ReportProgress(0, Strings.ProgressMessage6);
+                        backgroundWorker.ReportProgress(0, Strings.UserState6);
                         clientConfiguration.StartUpdate = "UPDATE_START";
 
                         DataPatcher(backgroundWorker);
@@ -79,7 +78,7 @@ namespace Updater
                         var progressPercentage = MathHelper.Percentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
                         if (progressPercentage > 0)
                         {
-                            backgroundWorker.ReportProgress(0, Strings.ProgressMessage7);
+                            backgroundWorker.ReportProgress(0, Strings.UserState7);
                             backgroundWorker.ReportProgress(progressPercentage, new ProgressReport("ProgressBar2"));
                         }
                     }

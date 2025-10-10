@@ -117,31 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ProgressMessage1" xml:space="preserve">
+  <data name="UserState1" xml:space="preserve">
     <value>Downloading updater</value>
   </data>
-  <data name="ProgressMessage2" xml:space="preserve">
+  <data name="UserState2" xml:space="preserve">
     <value>Downloading ({0}/{1})</value>
   </data>
-  <data name="ProgressMessage3" xml:space="preserve">
+  <data name="UserState3" xml:space="preserve">
     <value>Download failed</value>
   </data>
-  <data name="ProgressMessage4" xml:space="preserve">
+  <data name="UserState4" xml:space="preserve">
     <value>Extracting</value>
   </data>
-  <data name="ProgressMessage5" xml:space="preserve">
+  <data name="UserState5" xml:space="preserve">
     <value>Extraction failed</value>
   </data>
-  <data name="ProgressMessage6" xml:space="preserve">
+  <data name="UserState6" xml:space="preserve">
     <value>Updating</value>
   </data>
-  <data name="ProgressMessage7" xml:space="preserve">
+  <data name="UserState7" xml:space="preserve">
     <value>Update completed</value>
   </data>
-  <data name="Message1" xml:space="preserve">
-    <value>Updater already in operation.</value>
+  <data name="MessageBoxText1" xml:space="preserve">
+    <value>The application is already running.</value>
   </data>
-  <data name="Message2" xml:space="preserve">
-    <value>Game still in operation. Please try again after closing the game.</value>
+  <data name="MessageBoxText2" xml:space="preserve">
+    <value>Please close the game application.</value>
   </data>
 </root>

@@ -61,83 +61,83 @@ namespace Updater.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updater already in operation..
+        ///   Looks up a localized string similar to The application is already running..
         /// </summary>
-        internal static string Message1 {
+        internal static string MessageBoxText1 {
             get {
-                return ResourceManager.GetString("Message1", resourceCulture);
+                return ResourceManager.GetString("MessageBoxText1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game still in operation. Please try again after closing the game..
+        ///   Looks up a localized string similar to Please close the game application..
         /// </summary>
-        internal static string Message2 {
+        internal static string MessageBoxText2 {
             get {
-                return ResourceManager.GetString("Message2", resourceCulture);
+                return ResourceManager.GetString("MessageBoxText2", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Downloading updater.
         /// </summary>
-        internal static string ProgressMessage1 {
+        internal static string UserState1 {
             get {
-                return ResourceManager.GetString("ProgressMessage1", resourceCulture);
+                return ResourceManager.GetString("UserState1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Downloading ({0}/{1}).
         /// </summary>
-        internal static string ProgressMessage2 {
+        internal static string UserState2 {
             get {
-                return ResourceManager.GetString("ProgressMessage2", resourceCulture);
+                return ResourceManager.GetString("UserState2", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Download failed.
         /// </summary>
-        internal static string ProgressMessage3 {
+        internal static string UserState3 {
             get {
-                return ResourceManager.GetString("ProgressMessage3", resourceCulture);
+                return ResourceManager.GetString("UserState3", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Extracting.
         /// </summary>
-        internal static string ProgressMessage4 {
+        internal static string UserState4 {
             get {
-                return ResourceManager.GetString("ProgressMessage4", resourceCulture);
+                return ResourceManager.GetString("UserState4", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Extraction failed.
         /// </summary>
-        internal static string ProgressMessage5 {
+        internal static string UserState5 {
             get {
-                return ResourceManager.GetString("ProgressMessage5", resourceCulture);
+                return ResourceManager.GetString("UserState5", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Updating.
         /// </summary>
-        internal static string ProgressMessage6 {
+        internal static string UserState6 {
             get {
-                return ResourceManager.GetString("ProgressMessage6", resourceCulture);
+                return ResourceManager.GetString("UserState6", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Update completed.
         /// </summary>
-        internal static string ProgressMessage7 {
+        internal static string UserState7 {
             get {
-                return ResourceManager.GetString("ProgressMessage7", resourceCulture);
+                return ResourceManager.GetString("UserState7", resourceCulture);
             }
         }
     }
