@@ -86,7 +86,10 @@ namespace Updater
             {
                 clientConfiguration?.Save();
                 clientConfiguration?.Dispose();
+                clientConfiguration = null;
+
                 serverConfiguration?.Dispose();
+                serverConfiguration = null;
             }
         }
 
