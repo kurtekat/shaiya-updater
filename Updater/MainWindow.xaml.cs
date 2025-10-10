@@ -88,12 +88,6 @@ namespace Updater
 
         private void Window1_Initialized(object sender, EventArgs e)
         {
-            if (DllImport.FindWindowW(null, Title) != IntPtr.Zero)
-            {
-                MessageBox.Show(Strings.MessageBoxText1, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                Application.Current.Shutdown(0);
-            }
-
             if (DllImport.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
             {
                 MessageBox.Show(Strings.GameWindow, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
