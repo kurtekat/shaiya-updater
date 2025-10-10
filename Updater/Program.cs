@@ -86,8 +86,7 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(ex.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {

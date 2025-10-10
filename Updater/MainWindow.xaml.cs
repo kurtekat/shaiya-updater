@@ -88,17 +88,15 @@ namespace Updater
 
         private void Window1_Initialized(object sender, EventArgs e)
         {
-            if (DllImport.FindWindowW(null, Application.Current.MainWindow.Title) != IntPtr.Zero)
+            if (DllImport.FindWindowW(null, Title) != IntPtr.Zero)
             {
-                var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(Strings.Message1, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Strings.MessageBoxText1, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
             if (DllImport.FindWindowW("GAME", "Shaiya") != IntPtr.Zero)
             {
-                var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(Strings.Message2, caption, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Strings.MessageBoxText2, Title, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Application.Current.Shutdown(0);
             }
 
@@ -216,8 +214,7 @@ namespace Updater
             }
             catch (Exception ex)
             {
-                var caption = Application.ResourceAssembly.GetName().Name;
-                MessageBox.Show(ex.Message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown(ex.HResult);
             }
         }
