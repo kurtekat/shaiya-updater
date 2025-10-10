@@ -41,7 +41,6 @@ This project is designed to be like the original application. Users are expected
 [Version]
 CheckVersion=3
 CurrentVersion=1
-StartUpdate=UPDATE_END
 ```
 
 ## Server Configuration
@@ -85,6 +84,6 @@ Assign `UpdaterVersion` in the configuration file.
 ; https://website.com/shaiya/UpdateVersion.ini
 [Version]
 CheckVersion=3
-UpdaterVersion=2
 PatchFileVersion=10
+UpdaterVersion=2
 ```

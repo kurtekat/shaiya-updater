@@ -55,7 +55,6 @@ namespace Updater
                         }
 
                         backgroundWorker.ReportProgress(0, Strings.UserState4);
-                        clientConfiguration.StartUpdate = "EXTRACT_START";
 
                         if (!patch.ExtractToCurrentDirectory())
                         {
@@ -63,15 +62,10 @@ namespace Updater
                             return;
                         }
 
-                        clientConfiguration.StartUpdate = "EXTRACT_END";
                         File.Delete(patch.Path);
-
                         backgroundWorker.ReportProgress(0, Strings.UserState6);
-                        clientConfiguration.StartUpdate = "UPDATE_START";
-
                         DataPatcher(backgroundWorker);
 
-                        clientConfiguration.StartUpdate = "UPDATE_END";
                         clientConfiguration.CurrentVersion++;
                         progressValue++;
 

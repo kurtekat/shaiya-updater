@@ -13,7 +13,6 @@ namespace Updater.Configuration
         public const string FileName = "Version.ini";
         private int _checkVersion;
         private int _currentVersion;
-        private string? _startUpdate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClientConfiguration"/> class.
@@ -29,7 +28,6 @@ namespace Updater.Configuration
             var data = Data.ToImmutableDictionary();
             _checkVersion = Convert.ToInt32(data.GetValueOrDefault("Version:CheckVersion"));
             _currentVersion = Convert.ToInt32(data.GetValueOrDefault("Version:CurrentVersion", "1"));
-            _startUpdate = data.GetValueOrDefault("Version:StartUpdate");
         }
 
         /// <summary>
@@ -78,19 +76,6 @@ namespace Updater.Configuration
             {
                 _currentVersion = value;
                 Set("Version:CurrentVersion", _currentVersion.ToString());
-            }
-        }
-
-        /// <summary>
-        /// Not implemented
-        /// </summary>
-        public string? StartUpdate
-        {
-            get => _startUpdate;
-            set
-            {
-                _startUpdate = value;
-                Set("Version:StartUpdate", _startUpdate);
             }
         }
     }
