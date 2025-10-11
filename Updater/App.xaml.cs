@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+﻿using System.IO;
 using System.Windows;
 using Updater.Resources;
 
@@ -13,7 +13,8 @@ namespace Updater
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _mutex = new Mutex(true, $"{ProductName}_SingleInstanceMutex", out bool createdNew);
+            var fileName = Path.GetFileNameWithoutExtension(Environment.ProcessPath);
+            _mutex = new Mutex(true, $"{fileName}_SingleInstanceMutex", out bool createdNew);
 
             if (createdNew)
             {
@@ -21,17 +22,9 @@ namespace Updater
             }
             else
             {
-                MessageBox.Show(Strings.SingleInstance, ProductName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(Strings.SingleInstance, fileName, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 Current.Shutdown(0);
             }
         }
-
-        /// <summary>
-        /// Gets the product name associated with this application.
-        /// </summary>
-        public static string? ProductName => Assembly.GetEntryAssembly()
-                    ?.GetCustomAttributes(typeof(AssemblyProductAttribute))
-                    ?.OfType<AssemblyProductAttribute>()
-                    ?.FirstOrDefault()?.Product;
     }
 }
