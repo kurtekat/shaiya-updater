@@ -46,6 +46,17 @@ namespace Updater
             Button2.AddHandler(PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(Button2_Click), true);
         }
 
+        private static void ImageInit(Image image, string resourceName)
+        {
+            var bitmapImage = BitmapImageHelper.FromManifestResource(resourceName);
+            if (bitmapImage != null)
+            {
+                image.Width = bitmapImage.PixelWidth;
+                image.Height = bitmapImage.PixelHeight;
+                image.Source = bitmapImage;
+            }
+        }
+
         private void ProgressMessageHandler_HttpReceiveProgress(object? sender, HttpProgressEventArgs e)
         {
             if (sender == null)
@@ -94,61 +105,13 @@ namespace Updater
                 Application.Current.Shutdown(0);
             }
 
-            var image167 = BitmapImageHelper.FromManifestResource("Bitmap167.bmp");
-            if (image167 != null)
-            {
-                _image167.Width = image167.PixelWidth;
-                _image167.Height = image167.PixelHeight;
-                _image167.Source = image167;
-            }
-
-            var image168 = BitmapImageHelper.FromManifestResource("Bitmap168.bmp");
-            if (image168 != null)
-            {
-                _image168.Width = image168.PixelWidth;
-                _image168.Height = image168.PixelHeight;
-                _image168.Source = image168;
-            }
-
-            var image169 = BitmapImageHelper.FromManifestResource("Bitmap169.bmp");
-            if (image169 != null)
-            {
-                _image169.Width = image169.PixelWidth;
-                _image169.Height = image169.PixelHeight;
-                _image169.Source = image169;
-            }
-
-            var image170 = BitmapImageHelper.FromManifestResource("Bitmap170.bmp");
-            if (image170 != null)
-            {
-                _image170.Width = image170.PixelWidth;
-                _image170.Height = image170.PixelHeight;
-                _image170.Source = image170;
-            }
-
-            var image185 = BitmapImageHelper.FromManifestResource("Bitmap185.bmp");
-            if (image185 != null)
-            {
-                _image185.Width = image185.PixelWidth;
-                _image185.Height = image185.PixelHeight;
-                _image185.Source = image185;
-            }
-
-            var image187 = BitmapImageHelper.FromManifestResource("Bitmap187.bmp");
-            if (image187 != null)
-            {
-                _image187.Width = image187.PixelWidth;
-                _image187.Height = image187.PixelHeight;
-                _image187.Source = image187;
-            }
-
-            var image188 = BitmapImageHelper.FromManifestResource("Bitmap188.bmp");
-            if (image188 != null)
-            {
-                _image188.Width = image188.PixelWidth;
-                _image188.Height = image188.PixelHeight;
-                _image188.Source = image188;
-            }
+            ImageInit(_image167, "Bitmap167.bmp");
+            ImageInit(_image168, "Bitmap168.bmp");
+            ImageInit(_image169, "Bitmap169.bmp");
+            ImageInit(_image170, "Bitmap170.bmp");
+            ImageInit(_image185, "Bitmap185.bmp");
+            ImageInit(_image187, "Bitmap187.bmp");
+            ImageInit(_image188, "Bitmap188.bmp");
         }
 
         private void Window1_Loaded(object sender, RoutedEventArgs e)
