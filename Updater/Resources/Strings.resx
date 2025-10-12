@@ -135,7 +135,7 @@
   <data name="UserState6" xml:space="preserve">
     <value>Updating</value>
   </data>
-  <data name="UserState7" xml:space="preserve">
+  <data name="UserState8" xml:space="preserve">
     <value>Update completed</value>
   </data>
   <data name="SingleInstance" xml:space="preserve">
@@ -143,5 +143,8 @@
   </data>
   <data name="GameWindow" xml:space="preserve">
     <value>Please close the game application.</value>
+  </data>
+  <data name="UserState7" xml:space="preserve">
+    <value>Building archive</value>
   </data>
 </root>

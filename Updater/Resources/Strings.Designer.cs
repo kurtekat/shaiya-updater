@@ -133,11 +133,20 @@ namespace Updater.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update completed.
+        ///   Looks up a localized string similar to Building archive.
         /// </summary>
         internal static string UserState7 {
             get {
                 return ResourceManager.GetString("UserState7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update completed.
+        /// </summary>
+        internal static string UserState8 {
+            get {
+                return ResourceManager.GetString("UserState8", resourceCulture);
             }
         }
     }

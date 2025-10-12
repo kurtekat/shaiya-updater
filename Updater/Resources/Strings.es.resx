@@ -135,7 +135,7 @@
   <data name="UserState6" xml:space="preserve">
     <value>Actualizando</value>
   </data>
-  <data name="UserState7" xml:space="preserve">
+  <data name="UserState8" xml:space="preserve">
     <value>Actualización completada</value>
   </data>
   <data name="SingleInstance" xml:space="preserve">
@@ -143,5 +143,8 @@
   </data>
   <data name="GameWindow" xml:space="preserve">
     <value>Cierre la aplicación del juego.</value>
+  </data>
+  <data name="UserState7" xml:space="preserve">
+    <value>Construyendo archivo</value>
   </data>
 </root>

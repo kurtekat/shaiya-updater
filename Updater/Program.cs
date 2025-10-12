@@ -7,6 +7,7 @@ using Parsec.Shaiya.Data;
 using Updater.Common;
 using Updater.Configuration;
 using Updater.Core;
+using Updater.Data;
 using Updater.Extensions;
 using Updater.Helpers;
 using Updater.Resources;
@@ -72,10 +73,13 @@ namespace Updater
                         var progressPercentage = MathHelper.Percentage(clientConfiguration.CurrentVersion, serverConfiguration.PatchFileVersion);
                         if (progressPercentage > 0)
                         {
-                            backgroundWorker.ReportProgress(0, Strings.UserState7);
                             backgroundWorker.ReportProgress(progressPercentage, new ProgressReport("ProgressBar2"));
                         }
                     }
+
+                    backgroundWorker.ReportProgress(0, Strings.UserState7);
+                    DataBuilder(backgroundWorker);
+                    backgroundWorker.ReportProgress(0, Strings.UserState8);
                 }
             }
             catch (Exception ex)
@@ -93,11 +97,30 @@ namespace Updater
             }
         }
 
+        private static void DataBuilder(BackgroundWorker backgroundWorker)
+        {
+            if (!File.Exists("data.sah") || !File.Exists("data.saf"))
+                return;
+
+            var data = new Parsec.Shaiya.Data.Data("data.sah", "data.saf");
+            File.Move("data.sah", "data.sah.bak", true);
+            File.Move("data.saf", "data.saf.bak", true);
+            data.Sah.Path += ".bak";
+            data.Saf.Path += ".bak";
+
+            var progressReport = new ProgressReport("ProgressBar1");
+            var progress = new Progress(backgroundWorker, progressReport, data.FileIndex.Count, 1);
+            Updater.Data.DataBuilder.Build(data, Directory.GetCurrentDirectory(), progress.PerformStep);
+
+            File.Delete(data.Sah.Path);
+            File.Delete(data.Saf.Path);
+        }
+
         private static void DataPatcher(BackgroundWorker backgroundWorker)
         {
             if (File.Exists("delete.lst"))
             {
-                var data = new Data("data.sah", "data.saf");
+                var data = new Parsec.Shaiya.Data.Data("data.sah", "data.saf");
                 var paths = File.ReadAllLines("delete.lst");
 
                 var progressReport = new ProgressReport("ProgressBar1");
@@ -110,8 +133,8 @@ namespace Updater
 
             if (File.Exists("update.sah") && File.Exists("update.saf"))
             {
-                var data = new Data("data.sah", "data.saf");
-                var update = new Data("update.sah", "update.saf");
+                var data = new Parsec.Shaiya.Data.Data("data.sah", "data.saf");
+                var update = new Parsec.Shaiya.Data.Data("update.sah", "update.saf");
 
                 var progressReport = new ProgressReport("ProgressBar1");
                 var progress = new Progress(backgroundWorker, progressReport, update.FileIndex.Count, 1);
