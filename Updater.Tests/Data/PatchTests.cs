@@ -1,8 +1,8 @@
 using System.IO.Compression;
-using Updater.Core;
+using Updater.Data;
 using Updater.Extensions;
 
-namespace Updater.Tests.Core
+namespace Updater.Tests.Data
 {
     [TestFixture]
     public class PatchTests

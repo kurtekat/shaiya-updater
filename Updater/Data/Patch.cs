@@ -2,7 +2,7 @@ using System.IO;
 using System.IO.Compression;
 using Updater.Common;
 
-namespace Updater.Core
+namespace Updater.Data
 {
     /// <summary>
     /// Represents a zip archive with a .patch extension.
