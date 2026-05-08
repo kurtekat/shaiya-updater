@@ -45,6 +45,13 @@ CurrentVersion=1
 
 https://github.com/kurtekat/kurtekat.github.io
 
+### Host
+
+```csharp
+// Updater/Configuration/Web.cs
+public const string Host = "kurtekat.github.io";
+```
+
 ## Patching
 
 ### Data
