@@ -14,7 +14,7 @@
         public NewUpdater()
         {
             FileName = "new_updater.exe";
-            Url = $"{Web.Scheme}://{Web.Root}/shaiya/{FileName}";
+            Url = $"{Web.BaseUrl}/shaiya/{FileName}";
         }
     }
 }

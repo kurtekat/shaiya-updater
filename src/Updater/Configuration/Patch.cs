@@ -20,7 +20,7 @@ namespace Updater.Configuration
             ArgumentOutOfRangeException.ThrowIfGreaterThan(version, 9999, nameof(version));
             // e.g., ps0002.patch
             FileName = $"ps{version:D4}.patch";
-            Url = $"{Web.Scheme}://{Web.Root}/shaiya/patch/{FileName}";
+            Url = $"{Web.BaseUrl}/shaiya/patch/{FileName}";
         }
     }
 }

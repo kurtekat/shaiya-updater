@@ -58,7 +58,7 @@ namespace Updater
 
         public static void DoWork()
         {
-            var url = $"{Web.Scheme}://{Web.Root}/shaiya/UpdateVersion.ini";
+            var url = $"{Web.BaseUrl}/shaiya/UpdateVersion.ini";
             var rawData = App.HttpClient.DownloadString(url);
 
             var serverSettings = new Ini();

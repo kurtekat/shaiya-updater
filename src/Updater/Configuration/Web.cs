@@ -1,8 +1,14 @@
-﻿namespace Updater.Configuration
+﻿using System;
+
+namespace Updater.Configuration
 {
     public static class Web
     {
-        public const string Scheme = "https";
-        public const string Root = "kurtekat.github.io";
+        public const string Host = "kurtekat.github.io";
+
+        public static string BaseUrl
+        {
+            get => $"{Uri.UriSchemeHttps}{Uri.SchemeDelimiter}{Host}";
+        }
     }
 }
