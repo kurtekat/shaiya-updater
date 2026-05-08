@@ -49,9 +49,9 @@ namespace Updater.Core.Extensions
 
         private static Uri? CreateUri(string? uri)
         {
-            return string.IsNullOrEmpty(uri)
-            ? null
-            : new Uri(uri, UriKind.RelativeOrAbsolute);
+            return string.IsNullOrEmpty(uri) 
+                ? null
+                : new Uri(uri, UriKind.RelativeOrAbsolute);
         }
     }
 }
