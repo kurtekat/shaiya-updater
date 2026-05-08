@@ -18,8 +18,6 @@ Windows Presentation Foundation (WPF)
 
 [Microsoft.AspNet.WebApi.Client](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client/)
 
-[Microsoft.Extensions.Configuration.Ini](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Ini/)
-
 [Parsec.Shaiya.Data](https://www.nuget.org/packages/Parsec.Shaiya.Data/)
 
 ## Build
@@ -47,14 +45,6 @@ CurrentVersion=1
 
 https://github.com/kurtekat/kurtekat.github.io
 
-### Web
-
-```csharp
-// Updater/Common/Constants.cs
-public const string Source = "https://kurtekat.github.io";
-public const string WebBrowserSource = "https://google.com";
-```
-
 ## Patching
 
 ### Data
@@ -68,8 +58,8 @@ https://www.elitepvpers.com/forum/shaiya-pserver-guides-releases/4937732-guide-h
 Assign `UpdaterVersion` and build the application.
 
 ```csharp
-// Updater/Common/Constants.cs
-public const uint UpdaterVersion = 2;
+// Updater/Configuration/Constants.cs
+public const int UpdaterVersion = 2;
 ```
 
 Rename the executable to `new_updater` and upload it to the expected location.
