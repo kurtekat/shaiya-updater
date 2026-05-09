@@ -15,19 +15,21 @@ using System.Linq;
 
 namespace Updater.Configuration
 {
-    public class Ini
+    public sealed class Ini
     {
         private readonly Dictionary<string, string> _data;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Ini"/> class.
+        /// </summary>
         public Ini()
         {
             _data = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
-        /// 
+        /// Reads the contents of the specified file.
         /// </summary>
-        /// <param name="fileInfo">The file to open for reading.</param>
         public void Parse(FileInfo fileInfo)
         {
             var rawData = File.ReadAllText(fileInfo.FullName);
@@ -36,19 +38,14 @@ namespace Updater.Configuration
         }
 
         /// <summary>
-        /// 
+        /// Reads the contents of the specified string.
         /// </summary>
-        /// <param name="rawData">A string containing all the text in the file.</param>
         public void Parse(string rawData)
         {
             using (var reader = new StringReader(rawData))
                 Parse(reader);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="reader"></param>
         public void Parse(StringReader reader)
         {
             _data.Clear();
@@ -91,18 +88,16 @@ namespace Updater.Configuration
         }
 
         /// <summary>
-        /// Writes the current <see cref="Ini"/> to the specified file.
+        /// Writes the current data to the specified file.
         /// </summary>
-        /// <param name="fileInfo">The file to write to.</param>
         public void Write(FileInfo fileInfo)
         {
             Write(fileInfo.FullName);
         }
 
         /// <summary>
-        /// Writes the current <see cref="Ini"/> to the specified file.
+        /// Writes the current data to the specified file.
         /// </summary>
-        /// <param name="fileName">The file to write to.</param>
         public void Write(string fileName)
         {
             var contents = new List<string>();
@@ -133,9 +128,7 @@ namespace Updater.Configuration
         /// <summary>
         /// Gets the value associated with the specified key, or a default value.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
+        /// <returns>The value associated with the specified key; otherwise, a default value.</returns>
         public string GetValueOrDefault(string key, string defaultValue)
         {
             if (!_data.TryGetValue(key, out var value))
@@ -147,9 +140,7 @@ namespace Updater.Configuration
         /// <summary>
         /// Gets the value associated with the specified key, or a default value.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
+        /// <returns>The value associated with the specified key; otherwise, a default value.</returns>
         public int GetValueOrDefault(string key, int defaultValue)
         {
             if (!_data.TryGetValue(key, out var value))
@@ -165,20 +156,16 @@ namespace Updater.Configuration
         }
 
         /// <summary>
-        /// Sets the value associated with the specified key, or creates a new element with the specified key.
+        /// Sets the value associated with the specified key, or adds the key/value pair.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
         public void SetOrAddValue(string key, string value)
         {
             _data[key] = value;
         }
 
         /// <summary>
-        /// Sets the value associated with the specified key, or creates a new element with the specified key.
+        /// Sets the value associated with the specified key, or adds the key/value pair.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
         public void SetOrAddValue(string key, int value)
         {
             _data[key] = value.ToString();

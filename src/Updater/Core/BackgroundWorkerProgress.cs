@@ -17,10 +17,10 @@ namespace Updater.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="BackgroundWorkerProgress"/> class.
         /// </summary>
-        /// <param name="backgroundWorker"></param>
-        /// <param name="userState">A unique <see cref="object"/> indicating the user state.</param>
+        /// <param name="backgroundWorker">A <see cref="BackgroundWorker"/> instance.</param>
+        /// <param name="userState">A unique object indicating the user state.</param>
         /// <param name="maximum">The maximum value of the range. The default is 100.</param>
-        /// <param name="step">The amount by which to increment the value with each call to the <see cref='PerformStep'/> method. The default is 10.</param>
+        /// <param name="step">The amount to increment the value. The default is 10.</param>
         public BackgroundWorkerProgress(BackgroundWorker backgroundWorker, object? userState, int maximum = 100, int step = 10)
         {
             ArgumentNullException.ThrowIfNull(backgroundWorker, nameof(backgroundWorker));
@@ -36,7 +36,7 @@ namespace Updater.Core
         /// <summary>
         /// Increments the current value by the specified amount.
         /// </summary>
-        /// <param name="value">The amount by which to increment the current value.</param>
+        /// <param name="value">The amount to increment the current value.</param>
         public void Increment(int value)
         {
             _value += value;
@@ -51,7 +51,7 @@ namespace Updater.Core
         }
 
         /// <summary>
-        /// Increments the current value by the amount of the <see cref="Step"/> property.
+        /// Increments the current value by the amount of the step property.
         /// </summary>
         public void PerformStep()
         {
@@ -91,7 +91,7 @@ namespace Updater.Core
         }
 
         /// <summary>
-        /// Gets or sets the amount by which to increment the current value with each call to the <see cref='PerformStep'/> method.
+        /// Gets or sets the amount to increment the current value.
         /// </summary>
         public int Step
         {
